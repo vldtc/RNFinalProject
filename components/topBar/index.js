@@ -7,17 +7,23 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React from 'react';
-
+import {useSelector, useDispatch} from 'react-redux';
+import {updateDrawerState} from '../../features/drawerReducer/drawerReducer';
 const {StatusBarManager} = NativeModules;
 
 const STATUSBAR_HEIGHT = StatusBarManager.HEIGHT;
 
 const TopBarItem = () => {
+  const dispatch = useDispatch();
+  const drawerState = useSelector(state => state.drawer.drawerState);
   return (
     <View style={styles.topBarContainer}>
       <View style={styles.topBarRow}>
-        <TouchableOpacity>
-          <Text>Left</Text>
+        <TouchableOpacity
+          onPress={() => {
+            dispatch(updateDrawerState());
+          }}>
+          <Text>{drawerState ? 'Close' : 'Open'}</Text>
         </TouchableOpacity>
         <Text>Middle</Text>
         <Text>Right</Text>

@@ -1,15 +1,81 @@
-import {View, Platform, StyleSheet} from 'react-native';
-import React from 'react';
+import {View, Platform, StyleSheet, Animated, Easing} from 'react-native';
+import React, {useEffect, useRef} from 'react';
 import {DrawerMenu} from '../index';
 import {TopBarItem} from '../../components';
+import {useSelector} from 'react-redux';
 
 const NavigatorScreen = () => {
+  const drawerState = useSelector(state => state.drawer.drawerState);
+
+  const translateDirection = useRef(
+    new Animated.Value(drawerState ? 150 : 0),
+  ).current;
+
+  const scale = useRef(new Animated.Value(drawerState ? 0.8 : 1)).current;
+
+  const rotation = useRef(new Animated.Value(drawerState ? 15 : 0)).current;
+
+  const borderRadius = useRef(
+    new Animated.Value(drawerState ? (Platform.OS === 'ios' ? 50 : 10) : 0),
+  ).current;
+
+  const platformBorderRadius = Platform.OS === 'ios' ? 50 : 10;
+  const endPlatformBorderRadius = Platform.OS === 'ios' ? 50 : 0;
+
+  const easing = Easing.cubic;
+
+  useEffect(() => {
+    Animated.timing(translateDirection, {
+      toValue: drawerState ? 150 : 0,
+      duration: 500,
+      easing: easing,
+      useNativeDriver: false,
+    }).start();
+    Animated.timing(scale, {
+      toValue: drawerState ? 0.8 : 1,
+      duration: 500,
+      easing: easing,
+      useNativeDriver: false,
+    }).start();
+    Animated.timing(rotation, {
+      toValue: drawerState ? 15 : 0,
+      duration: 500,
+      easing: easing,
+      useNativeDriver: false,
+    }).start();
+    Animated.timing(borderRadius, {
+      toValue: drawerState ? platformBorderRadius : endPlatformBorderRadius,
+      duration: 500,
+      easing: easing,
+      useNativeDriver: false,
+    }).start();
+  }, [drawerState]);
+
+  const interpolatedRotation = rotation.interpolate({
+    inputRange: [0, 15],
+    outputRange: ['0deg', '15deg'],
+  });
+
   return (
     <View style={styles.screenStyle}>
       <DrawerMenu />
-      <View style={styles.screenView}>
+      <Animated.View
+        style={[
+          styles.screenView,
+          {
+            transform: [
+              {translateX: translateDirection},
+              {translateY: translateDirection},
+              {scaleY: scale},
+              {scaleX: scale},
+              {rotate: interpolatedRotation},
+            ],
+            borderRadius: borderRadius,
+            shadowOpacity: 0.5,
+          },
+        ]}>
         <TopBarItem />
-      </View>
+      </Animated.View>
     </View>
   );
 };
@@ -23,23 +89,13 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 0,
     alignItems: 'center',
-    // transform: [
-    //   {translateX: 150},
-    //   {translateY: 150},
-    //   {scaleY: 0.8},
-    //   {scaleX: 0.8},
-    //   {rotate: '15deg'},
-    // ],
-    // borderRadius: Platform.OS === 'ios' ? 50 : 10,
-    // shadowColor: '#000',
-    // shadowOffset: {
-    //   width: -5,
-    //   height: 5,
-    // },
-    // shadowOpacity: 0.25,
-    // shadowRadius: 5,
-
-    // elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: -5,
+      height: 5,
+    },
+    shadowRadius: 5,
+    elevation: 10,
   },
 });
 
