@@ -1,4 +1,5 @@
 import AuthScreen from './authScreen';
-import HomeScreen from './homeScreen';
+import NavigatorScreen from './navigatorScreen';
+import DrawerMenu from './drawerMenu';
 
-export {AuthScreen, HomeScreen};
+export {AuthScreen, NavigatorScreen, DrawerMenu};
