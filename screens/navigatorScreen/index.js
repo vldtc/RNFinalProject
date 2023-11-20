@@ -1,11 +1,12 @@
 import {View, Platform, StyleSheet, Animated, Easing} from 'react-native';
 import React, {useEffect, useRef} from 'react';
-import {DrawerMenu} from '../index';
+import {DrawerMenu, HomeScreen, DashScreen, AboutMeScreen} from '../index';
 import {TopBarItem} from '../../components';
 import {useSelector} from 'react-redux';
 
 const NavigatorScreen = () => {
   const drawerState = useSelector(state => state.drawer.drawerState);
+  const currentScreen = useSelector(state => state.drawer.currentScreen);
 
   const translateDirection = useRef(
     new Animated.Value(drawerState ? 150 : 0),
@@ -16,11 +17,11 @@ const NavigatorScreen = () => {
   const rotation = useRef(new Animated.Value(drawerState ? 15 : 0)).current;
 
   const borderRadius = useRef(
-    new Animated.Value(drawerState ? (Platform.OS === 'ios' ? 50 : 10) : 0),
+    new Animated.Value(drawerState ? (Platform.OS === 'ios' ? 52 : 10) : 0),
   ).current;
 
-  const platformBorderRadius = Platform.OS === 'ios' ? 50 : 10;
-  const endPlatformBorderRadius = Platform.OS === 'ios' ? 50 : 0;
+  const platformBorderRadius = Platform.OS === 'ios' ? 52 : 10;
+  const endPlatformBorderRadius = Platform.OS === 'ios' ? 52 : 0;
 
   const easing = Easing.cubic;
 
@@ -75,6 +76,18 @@ const NavigatorScreen = () => {
           },
         ]}>
         <TopBarItem />
+        {(() => {
+          switch (currentScreen) {
+            case 'Home':
+              return <HomeScreen />;
+            case 'Dashboard':
+              return <DashScreen />;
+            case 'About Me':
+              return <AboutMeScreen />;
+            default:
+              return null; // or some default component
+          }
+        })()}
       </Animated.View>
     </View>
   );

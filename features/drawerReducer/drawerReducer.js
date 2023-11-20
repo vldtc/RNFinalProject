@@ -2,6 +2,8 @@ import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
   drawerState: false,
+  drawerScreens: ['Home', 'Dashboard', 'About Me'],
+  currentScreen: 'Home',
 };
 
 const drawerSlice = createSlice({
@@ -11,9 +13,12 @@ const drawerSlice = createSlice({
     updateDrawerState: state => {
       state.drawerState = !state.drawerState;
     },
+    updateCurrentScreen: (state, action) => {
+      state.currentScreen = action.payload;
+    },
   },
 });
 
-export const {updateDrawerState} = drawerSlice.actions;
+export const {updateDrawerState, updateCurrentScreen} = drawerSlice.actions;
 
 export default drawerSlice.reducer;

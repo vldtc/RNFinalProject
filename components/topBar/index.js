@@ -16,17 +16,19 @@ const STATUSBAR_HEIGHT = StatusBarManager.HEIGHT;
 const TopBarItem = () => {
   const dispatch = useDispatch();
   const drawerState = useSelector(state => state.drawer.drawerState);
+  const currentScreen = useSelector(state => state.drawer.currentScreen);
   return (
     <View style={styles.topBarContainer}>
       <View style={styles.topBarRow}>
         <TouchableOpacity
+          style={{flex: 1, textAlign: 'left'}}
           onPress={() => {
             dispatch(updateDrawerState());
           }}>
           <Text>{drawerState ? 'Close' : 'Open'}</Text>
         </TouchableOpacity>
-        <Text>Middle</Text>
-        <Text>Right</Text>
+        <Text style={styles.titleText}>{currentScreen}</Text>
+        <Text style={{flex: 1, textAlign: 'right'}}>Right</Text>
       </View>
     </View>
   );
@@ -35,11 +37,11 @@ const TopBarItem = () => {
 const styles = StyleSheet.create({
   topBarContainer: {
     backgroundColor: '#00aeff',
-    borderTopStartRadius: Platform.OS === 'ios' ? 50 : 10,
-    borderTopEndRadius: Platform.OS === 'ios' ? 50 : 10,
+    borderTopStartRadius: Platform.OS === 'ios' ? 52 : 10,
+    borderTopEndRadius: Platform.OS === 'ios' ? 52 : 10,
     borderBottomStartRadius: 10,
     borderBottomEndRadius: 10,
-    width: '97%',
+    width: '97.5%',
     marginTop: 5,
   },
   topBarRow: {
@@ -48,6 +50,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 16,
+  },
+  titleText: {
+    flex: 1,
+    color: '#fff',
+    fontSize: 22,
+    fontWeight: '300',
+    textAlign: 'center',
   },
 });
 
