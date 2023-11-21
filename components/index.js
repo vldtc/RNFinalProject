@@ -1,3 +1,4 @@
 import TopBarItem from './topBar';
+import CustomTextInput from './customTextInput';
 
-export {TopBarItem};
+export {TopBarItem, CustomTextInput};

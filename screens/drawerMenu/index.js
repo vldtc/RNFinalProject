@@ -13,7 +13,7 @@ const DrawerMenu = () => {
   const currentScreen = useSelector(state => state.drawer.currentScreen);
   return (
     <LinearGradient
-      colors={['#00bbff', '#424242']}
+      colors={['#00bbff', '#001eff']}
       // start={{x: 0, y: 0}}
       // end={{x: 1, y: 1}}
       style={styles.drawerView}>

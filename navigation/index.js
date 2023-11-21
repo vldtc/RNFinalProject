@@ -5,7 +5,7 @@ import {AuthScreen, NavigatorScreen} from '../screens';
 const Stack = createNativeStackNavigator();
 
 const Navigator = () => {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
   const authStack = () => {
     return (
