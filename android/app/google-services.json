@@ -1,0 +1,124 @@
+{
+  "project_info": {
+    "project_number": "376613489831",
+    "project_id": "batch3-ee305",
+    "storage_bucket": "batch3-ee305.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:376613489831:android:732d3dfa788270a250df82",
+        "android_client_info": {
+          "package_name": "com.finalprojectthahira"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSFtVB8qThF8vOsRK9f_66ZbjjRj1FY-w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:376613489831:android:f8f2f8266b505dd050df82",
+        "android_client_info": {
+          "package_name": "com.finalrndarsana"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSFtVB8qThF8vOsRK9f_66ZbjjRj1FY-w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:376613489831:android:0cb68c2353829e2350df82",
+        "android_client_info": {
+          "package_name": "com.groupprojsampurna"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSFtVB8qThF8vOsRK9f_66ZbjjRj1FY-w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:376613489831:android:151e98fe5084ad5e50df82",
+        "android_client_info": {
+          "package_name": "com.itc.batch3"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSFtVB8qThF8vOsRK9f_66ZbjjRj1FY-w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:376613489831:android:16f1f6189bc9241b50df82",
+        "android_client_info": {
+          "package_name": "com.rnfinalproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSFtVB8qThF8vOsRK9f_66ZbjjRj1FY-w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:376613489831:android:03b069958a80d5ca50df82",
+        "android_client_info": {
+          "package_name": "com.zenflix"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSFtVB8qThF8vOsRK9f_66ZbjjRj1FY-w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
