@@ -6,32 +6,67 @@ import {
   TouchableOpacity,
   Animated,
   Easing,
+  Platform,
 } from 'react-native';
 import React, {useState, useEffect, useRef} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {CustomTextInput, CustomButton} from '../../components';
+import {useSelector, useDispatch} from 'react-redux';
+import AuthHelper from '../../helpers/AuthHelper';
 
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
 
-const animatedTranslationY = screenHeight * 0.6;
+const animatedTranslationY = screenHeight * 0.75;
+const animatedTranslationYLogo =
+  Platform.OS === 'android' ? -(screenHeight * 0.12) : -(screenHeight * 0.09);
 
 const AuthScreen = () => {
+  //Login State for Register Modal
   const [loginState, setLoginState] = useState(true);
+
+  //Login Redux
+  const announcement = useSelector(state => state.login.announcement);
+  const dispatch = useDispatch();
+
+  //Text Inputs for Login
+  const [email, setEmail] = useState('');
+  const [pass, setPass] = useState('');
+
+  //Text Inputs for Register
+  const [emailRegister, setEmailRegister] = useState('');
+  const [passRegister, setPassRegister] = useState('');
+  const [passConfRegister, setPassConfRegister] = useState('');
+  const [ageRegister, setAgeRegister] = useState('');
+  const [fNameRegister, setFNameRegister] = useState('');
+  const [lNameRegister, setLNameRegister] = useState('');
+  const [genderRegister, setGenderRegister] = useState('');
+  const [userColorRegister, setUserColorRegister] = useState('');
+  const [userLocationRegister, setUserLocationRegister] = useState('');
 
   const registerTextStyle = loginState
     ? styles.textStyle
     : styles.registerTextStyle;
 
-  const translateY = useRef(
-    new Animated.Value(loginState ? animatedTranslationY : 0),
-  ).current;
+  const translateY = useRef(new Animated.Value(0)).current;
+
+  const translateYLogo = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     Animated.timing(translateY, {
       toValue: loginState ? animatedTranslationY : 0,
       duration: 500,
       easing: Easing.circle,
+      useNativeDriver: false,
+    }).start();
+    Animated.timing(translateYLogo, {
+      toValue: loginState
+        ? Platform.OS === 'ios'
+          ? -30
+          : -40
+        : animatedTranslationYLogo,
+      duration: 500,
+      easing: Easing.cubic,
       useNativeDriver: false,
     }).start();
   }, [loginState]);
@@ -47,15 +82,39 @@ const AuthScreen = () => {
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-        <Text style={styles.logoStyle}>Map My Friends</Text>
+        <Animated.Text
+          style={[
+            styles.logoStyle,
+            {transform: [{translateY: translateYLogo}]},
+          ]}>
+          Map My Friends
+        </Animated.Text>
       </View>
       {/* Login Container */}
-      <View style={styles.authContainer}>
+      <View style={[styles.authContainer, {height: screenHeight * 0.7}]}>
         <Text style={styles.registerTextStyle}>Login</Text>
         <View style={{height: 24}} />
-        <CustomTextInput placeholder="Email" />
-        <CustomTextInput placeholder="Password" secureTextEntry />
-        <CustomButton />
+        <Text>{announcement}</Text>
+        <CustomTextInput
+          secureTextEntry={false}
+          placeholder="Email"
+          onChangedText={text => {
+            setEmail(text);
+          }}
+        />
+        <CustomTextInput
+          placeholder="Password"
+          secureTextEntry={true}
+          onChangedText={text => {
+            setPass(text);
+          }}
+        />
+        <CustomButton
+          title="Login"
+          onPress={() => {
+            AuthHelper.signInUser(dispatch, email, pass);
+          }}
+        />
       </View>
       {/* Register Container */}
       <Animated.View
@@ -72,6 +131,70 @@ const AuthScreen = () => {
           }}>
           <Text>Animate</Text>
         </TouchableOpacity>
+        <CustomTextInput
+          secureTextEntry={false}
+          placeholder="Email"
+          onChangedText={text => {
+            setEmailRegister(text);
+          }}
+        />
+        <CustomTextInput
+          secureTextEntry={false}
+          placeholder="First name"
+          onChangedText={text => {
+            setFNameRegister(text);
+          }}
+        />
+        <CustomTextInput
+          secureTextEntry={false}
+          placeholder="Last name"
+          onChangedText={text => {
+            setLNameRegister(text);
+          }}
+        />
+        <CustomTextInput
+          secureTextEntry={false}
+          placeholder="Age"
+          onChangedText={text => {
+            setAgeRegister(text);
+          }}
+        />
+        <CustomTextInput
+          secureTextEntry={false}
+          placeholder="Gender"
+          onChangedText={text => {
+            setGenderRegister(text);
+          }}
+        />
+        <CustomTextInput
+          secureTextEntry={false}
+          placeholder="User color"
+          onChangedText={text => {
+            setUserColorRegister(text);
+          }}
+        />
+        <CustomTextInput
+          secureTextEntry={false}
+          placeholder="User location"
+          onChangedText={text => {
+            setUserLocationRegister(text);
+          }}
+        />
+        <CustomTextInput
+          secureTextEntry={true}
+          placeholder="Password"
+          onChangedText={text => {
+            setPassRegister(text);
+          }}
+        />
+        <CustomTextInput
+          secureTextEntry={true}
+          placeholder="Confirm password"
+          onChangedText={text => {
+            setPassConfRegister(text);
+          }}
+        />
+        <CustomButton title="Register" onPress={() => {}} />
       </Animated.View>
     </LinearGradient>
   );
@@ -90,7 +213,7 @@ const styles = StyleSheet.create({
   authContainer: {
     position: 'absolute',
     backgroundColor: '#fff',
-    height: screenHeight * 0.7,
+    height: screenHeight * 0.85,
     width: screenWidth,
     bottom: 0,
     alignSelf: 'center',

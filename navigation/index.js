@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {AuthScreen, NavigatorScreen} from '../screens';
+import {useSelector} from 'react-redux';
 
 const Stack = createNativeStackNavigator();
 
 const Navigator = () => {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const loginState = useSelector(state => state.login.isUserLoggedIn);
 
   const authStack = () => {
     return (
@@ -30,9 +31,7 @@ const Navigator = () => {
   };
 
   return (
-    <Stack.Navigator>
-      {isUserLoggedIn ? mainStack() : authStack()}
-    </Stack.Navigator>
+    <Stack.Navigator>{loginState ? mainStack() : authStack()}</Stack.Navigator>
   );
 };
 
