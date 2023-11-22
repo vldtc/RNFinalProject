@@ -2,9 +2,9 @@ import {
   View,
   TextInput,
   StyleSheet,
-  Text,
   Animated,
   Easing,
+  Text,
 } from 'react-native';
 import React, {useRef, useEffect, useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -14,13 +14,15 @@ const CustomTextInput = props => {
   const [focusState, setFocusState] = useState(false);
 
   const animatedHeight = useRef(new Animated.Value(0)).current;
-
   const animatedBorder = useRef(new Animated.Value(0)).current;
+
+  const animatedPlaceholderY = useRef(new Animated.Value(0)).current;
+  const animatedPlaceholderX = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     Animated.timing(animatedHeight, {
       toValue: focusState ? 40 : 2,
-      duration: 300,
+      duration: 500,
       easing: Easing.bounce,
       useNativeDriver: false,
     }).start();
@@ -44,9 +46,9 @@ const CustomTextInput = props => {
       ]}>
       <View>
         <FontAwesomeIcon
-          icon={faUser}
+          icon={props.icon}
           size={20}
-          style={[styles.icon, {color: '#fff'}]}
+          style={[styles.icon, {color: '#000'}]}
         />
       </View>
       <TextInput
@@ -56,19 +58,25 @@ const CustomTextInput = props => {
         onBlur={() => {
           setFocusState(false);
         }}
+        placeholder={props.placeholder}
+        placeholderTextColor={'black'}
         secureTextEntry={props.secureTextEntry}
         onChangeText={props.onChangedText}
-        placeholder={props.placeholder}
-        placeholderTextColor={'#000'}
         style={[styles.inputStyle, {transform: [{translateX: 0}]}]}
       />
       <Animated.View
         style={[
           styles.backgroundFocus,
-          {height: animatedHeight, borderRadius: animatedBorder},
+          {
+            height: animatedHeight,
+            width: '100%',
+            borderRadius: animatedBorder,
+          },
         ]}
       />
-      {/* <Text style={styles.placeholder}>{props.placeholder}</Text> */}
+      {/* <Animated.Text style={[styles.placeholder]}>
+        {props.placeholder}
+      </Animated.Text> */}
     </Animated.View>
   );
 };
@@ -79,7 +87,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 40,
     width: '80%',
-    marginBottom: 12,
+    marginBottom: 24,
   },
   backgroundFocus: {
     position: 'absolute',
@@ -94,10 +102,11 @@ const styles = StyleSheet.create({
     paddingStart: 16,
   },
   placeholder: {
+    width: '100%',
     position: 'absolute',
-    marginStart: 44,
-    color: '#007bff',
-    //transform: [{translateY: -20}],
+    marginStart: 36,
+    color: '#000000',
+    zIndex: -1,
   },
   icon: {
     transform: [{translateX: 8}],

@@ -9,7 +9,9 @@ import {
 import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {updateDrawerState} from '../../features/drawerReducer/drawerReducer';
+import {updateLoginState} from '../../features/loginReducer/loginReducer';
 const {StatusBarManager} = NativeModules;
+import auth from '@react-native-firebase/auth';
 
 const STATUSBAR_HEIGHT = StatusBarManager.HEIGHT;
 
@@ -28,7 +30,14 @@ const TopBarItem = () => {
           <Text>{drawerState ? 'Close' : 'Open'}</Text>
         </TouchableOpacity>
         <Text style={styles.titleText}>{currentScreen}</Text>
-        <Text style={{flex: 1, textAlign: 'right'}}>Right</Text>
+        <TouchableOpacity
+          style={{flex: 1}}
+          onPress={() => {
+            dispatch(updateLoginState(false));
+            auth().signOut();
+          }}>
+          <Text style={{textAlign: 'right'}}>Sign Out</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

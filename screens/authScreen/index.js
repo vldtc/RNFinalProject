@@ -13,6 +13,11 @@ import LinearGradient from 'react-native-linear-gradient';
 import {CustomTextInput, CustomButton} from '../../components';
 import {useSelector, useDispatch} from 'react-redux';
 import AuthHelper from '../../helpers/AuthHelper';
+import {faEnvelope} from '@fortawesome/free-solid-svg-icons/faEnvelope';
+import {faLock} from '@fortawesome/free-solid-svg-icons/faLock';
+import {faSignature} from '@fortawesome/free-solid-svg-icons/faSignature';
+import {faArrowUp19} from '@fortawesome/free-solid-svg-icons/faArrowUp19';
+import {faLocationCrosshairs} from '@fortawesome/free-solid-svg-icons/faLocationCrosshairs';
 
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
@@ -98,12 +103,14 @@ const AuthScreen = () => {
         <CustomTextInput
           secureTextEntry={false}
           placeholder="Email"
+          icon={faEnvelope}
           onChangedText={text => {
             setEmail(text);
           }}
         />
         <CustomTextInput
           placeholder="Password"
+          icon={faLock}
           secureTextEntry={true}
           onChangedText={text => {
             setPass(text);
@@ -134,6 +141,7 @@ const AuthScreen = () => {
         {Platform.OS === 'ios' ? <View style={{height: 24}} /> : null}
         <CustomTextInput
           secureTextEntry={false}
+          icon={faEnvelope}
           placeholder="Email"
           onChangedText={text => {
             setEmailRegister(text);
@@ -148,6 +156,7 @@ const AuthScreen = () => {
           <CustomTextInput
             styles={{width: '48.5%'}}
             secureTextEntry={false}
+            icon={faSignature}
             placeholder="First name"
             onChangedText={text => {
               setFNameRegister(text);
@@ -156,6 +165,7 @@ const AuthScreen = () => {
           <CustomTextInput
             styles={{width: '48.5%'}}
             secureTextEntry={false}
+            icon={faSignature}
             placeholder="Last name"
             onChangedText={text => {
               setLNameRegister(text);
@@ -165,6 +175,7 @@ const AuthScreen = () => {
         <CustomTextInput
           secureTextEntry={false}
           placeholder="Age"
+          icon={faArrowUp19}
           onChangedText={text => {
             setAgeRegister(text);
           }}
@@ -185,6 +196,7 @@ const AuthScreen = () => {
         />
         <CustomTextInput
           secureTextEntry={false}
+          icon={faLock}
           placeholder="User location"
           onChangedText={text => {
             setUserLocationRegister(text);
@@ -199,6 +211,7 @@ const AuthScreen = () => {
           <CustomTextInput
             styles={{width: '48.5%'}}
             secureTextEntry={true}
+            icon={faLock}
             placeholder="Password"
             onChangedText={text => {
               setPassRegister(text);
@@ -207,6 +220,7 @@ const AuthScreen = () => {
           <CustomTextInput
             styles={{width: '48.5%'}}
             secureTextEntry={true}
+            icon={faLock}
             placeholder="Confirm password"
             onChangedText={text => {
               setPassConfRegister(text);
@@ -214,7 +228,12 @@ const AuthScreen = () => {
           />
         </View>
 
-        <CustomButton title="Register" onPress={() => {}} />
+        <CustomButton
+          title="Register"
+          onPress={() => {
+            AuthHelper.registerUser(dispatch, emailRegister, passRegister);
+          }}
+        />
       </Animated.View>
     </LinearGradient>
   );
