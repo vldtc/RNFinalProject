@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import React, {useState, useEffect, useRef} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import {CustomTextInput} from '../../components';
+import {CustomTextInput, CustomButton} from '../../components';
 
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
@@ -37,7 +37,9 @@ const AuthScreen = () => {
   }, [loginState]);
 
   return (
+    //Screen
     <LinearGradient colors={['#00bbff', '#001eff']} style={styles.screenView}>
+      {/* Logo Container */}
       <View
         style={{
           height: '35%',
@@ -47,10 +49,15 @@ const AuthScreen = () => {
         }}>
         <Text style={styles.logoStyle}>Map My Friends</Text>
       </View>
+      {/* Login Container */}
       <View style={styles.authContainer}>
         <Text style={styles.registerTextStyle}>Login</Text>
-        <CustomTextInput />
+        <View style={{height: 24}} />
+        <CustomTextInput placeholder="Email" />
+        <CustomTextInput placeholder="Password" secureTextEntry />
+        <CustomButton />
       </View>
+      {/* Register Container */}
       <Animated.View
         style={[styles.authContainer, {transform: [{translateY: translateY}]}]}>
         <Text style={[registerTextStyle]}>
