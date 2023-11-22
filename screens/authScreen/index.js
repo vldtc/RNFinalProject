@@ -131,6 +131,7 @@ const AuthScreen = () => {
           }}>
           <Text>Animate</Text>
         </TouchableOpacity>
+        {Platform.OS === 'ios' ? <View style={{height: 24}} /> : null}
         <CustomTextInput
           secureTextEntry={false}
           placeholder="Email"
@@ -138,20 +139,29 @@ const AuthScreen = () => {
             setEmailRegister(text);
           }}
         />
-        <CustomTextInput
-          secureTextEntry={false}
-          placeholder="First name"
-          onChangedText={text => {
-            setFNameRegister(text);
-          }}
-        />
-        <CustomTextInput
-          secureTextEntry={false}
-          placeholder="Last name"
-          onChangedText={text => {
-            setLNameRegister(text);
-          }}
-        />
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            width: '80%',
+          }}>
+          <CustomTextInput
+            styles={{width: '48.5%'}}
+            secureTextEntry={false}
+            placeholder="First name"
+            onChangedText={text => {
+              setFNameRegister(text);
+            }}
+          />
+          <CustomTextInput
+            styles={{width: '48.5%'}}
+            secureTextEntry={false}
+            placeholder="Last name"
+            onChangedText={text => {
+              setLNameRegister(text);
+            }}
+          />
+        </View>
         <CustomTextInput
           secureTextEntry={false}
           placeholder="Age"
@@ -180,20 +190,30 @@ const AuthScreen = () => {
             setUserLocationRegister(text);
           }}
         />
-        <CustomTextInput
-          secureTextEntry={true}
-          placeholder="Password"
-          onChangedText={text => {
-            setPassRegister(text);
-          }}
-        />
-        <CustomTextInput
-          secureTextEntry={true}
-          placeholder="Confirm password"
-          onChangedText={text => {
-            setPassConfRegister(text);
-          }}
-        />
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            width: '80%',
+          }}>
+          <CustomTextInput
+            styles={{width: '48.5%'}}
+            secureTextEntry={true}
+            placeholder="Password"
+            onChangedText={text => {
+              setPassRegister(text);
+            }}
+          />
+          <CustomTextInput
+            styles={{width: '48.5%'}}
+            secureTextEntry={true}
+            placeholder="Confirm password"
+            onChangedText={text => {
+              setPassConfRegister(text);
+            }}
+          />
+        </View>
+
         <CustomButton title="Register" onPress={() => {}} />
       </Animated.View>
     </LinearGradient>

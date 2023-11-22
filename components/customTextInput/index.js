@@ -1,47 +1,106 @@
-import {View, TextInput, StyleSheet} from 'react-native';
-import React from 'react';
+import {
+  View,
+  TextInput,
+  StyleSheet,
+  Text,
+  Animated,
+  Easing,
+} from 'react-native';
+import React, {useRef, useEffect, useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faUser} from '@fortawesome/free-solid-svg-icons/faUser';
 
 const CustomTextInput = props => {
+  const [focusState, setFocusState] = useState(false);
+
+  const animatedHeight = useRef(new Animated.Value(0)).current;
+
+  const animatedBorder = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(animatedHeight, {
+      toValue: focusState ? 40 : 2,
+      duration: 300,
+      easing: Easing.bounce,
+      useNativeDriver: false,
+    }).start();
+    Animated.timing(animatedBorder, {
+      toValue: focusState ? 10 : 0,
+      duration: 300,
+      delay: 100,
+      easing: Easing.circle,
+      useNativeDriver: false,
+    }).start();
+  }, [focusState]);
+
   return (
-    <View style={styles.containerStyle}>
-      <View style={[styles.iconContainer, {transform: [{translateX: 0}]}]}>
-        <FontAwesomeIcon icon={faUser} size={20} style={styles.iconStyle} />
+    <Animated.View
+      style={[
+        styles.containerStyle,
+        props.styles,
+        {
+          borderRadius: 0,
+        },
+      ]}>
+      <View>
+        <FontAwesomeIcon
+          icon={faUser}
+          size={20}
+          style={[styles.icon, {color: '#fff'}]}
+        />
       </View>
       <TextInput
+        onFocus={() => {
+          setFocusState(true);
+        }}
+        onBlur={() => {
+          setFocusState(false);
+        }}
         secureTextEntry={props.secureTextEntry}
-        placeholder={props.placeholder}
         onChangeText={props.onChangedText}
+        placeholder={props.placeholder}
+        placeholderTextColor={'#000'}
         style={[styles.inputStyle, {transform: [{translateX: 0}]}]}
       />
-    </View>
+      <Animated.View
+        style={[
+          styles.backgroundFocus,
+          {height: animatedHeight, borderRadius: animatedBorder},
+        ]}
+      />
+      {/* <Text style={styles.placeholder}>{props.placeholder}</Text> */}
+    </Animated.View>
   );
 };
 
 const styles = StyleSheet.create({
-  iconContainer: {
-    height: 50,
-    width: 50,
-    borderRadius: 14,
-    backgroundColor: '#fff000',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  iconStyle: {},
   containerStyle: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 8,
+    height: 40,
+    width: '80%',
+    marginBottom: 12,
+  },
+  backgroundFocus: {
+    position: 'absolute',
+    backgroundColor: '#007bff',
+    width: '100%',
+    alignSelf: 'flex-end',
+    zIndex: -1,
   },
   inputStyle: {
-    width: 200,
-    height: 40,
-    marginStart: 16,
-    backgroundColor: '#fff000',
-    borderRadius: 14,
-    paddingHorizontal: 16,
+    flex: 1,
+    paddingVertical: 12,
+    paddingStart: 16,
+  },
+  placeholder: {
+    position: 'absolute',
+    marginStart: 44,
+    color: '#007bff',
+    //transform: [{translateY: -20}],
+  },
+  icon: {
+    transform: [{translateX: 8}],
   },
 });
 
