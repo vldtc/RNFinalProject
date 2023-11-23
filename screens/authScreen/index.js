@@ -14,6 +14,8 @@ import {
   CustomTextInput,
   CustomButton,
   CustomDatePicker,
+  RadioButtonCustom,
+  CustomColorPick,
 } from '../../components';
 import {useSelector, useDispatch} from 'react-redux';
 import AuthHelper from '../../helpers/AuthHelper';
@@ -183,19 +185,14 @@ const AuthScreen = () => {
             console.log(ageRegister);
           }}
         />
-        <CustomTextInput
-          secureTextEntry={false}
-          placeholder={t('gender')}
-          onChangedText={text => {
-            setGenderRegister(text);
+        <RadioButtonCustom
+          options={['Male', 'Female']}
+          currentSelection={gender => {
+            setGenderRegister(gender);
           }}
         />
-        <CustomTextInput
-          secureTextEntry={false}
-          placeholder={t('userColor')}
-          onChangedText={text => {
-            setUserColorRegister(text);
-          }}
+        <CustomColorPick
+          colors={['white', 'yellow', 'blue', 'red', 'black', 'green']}
         />
         <CustomTextInput
           secureTextEntry={false}
