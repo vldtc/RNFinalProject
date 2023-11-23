@@ -1,16 +1,23 @@
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import React, {useId} from 'react';
+import React, {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {
   updateCurrentScreen,
   updateDrawerState,
 } from '../../features/drawerReducer/drawerReducer';
 import LinearGradient from 'react-native-linear-gradient';
+import {LanguageModal} from '../../components';
+import {useTranslation} from 'react-i18next';
 
 const DrawerMenu = () => {
   const dispatch = useDispatch();
   const drawerScreens = useSelector(state => state.drawer.drawerScreens);
   const currentScreen = useSelector(state => state.drawer.currentScreen);
+
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const {t} = useTranslation();
+
   return (
     <LinearGradient
       colors={['#00bbff', '#001eff']}
@@ -31,15 +38,24 @@ const DrawerMenu = () => {
             dispatch(updateDrawerState());
           }}>
           <Text style={styles.textMenu} key={index}>
-            {element}
+            {t(element)}
           </Text>
         </TouchableOpacity>
       ))}
       <View style={styles.divider} />
       <TouchableOpacity
+        onPress={() => {
+          setModalVisible(!modalVisible);
+        }}
         style={[styles.menuItemContainer, {backgroundColor: '#ffffff'}]}>
-        <Text style={styles.textMenu}>Change language</Text>
+        <Text style={styles.textMenu}>{t('changeLanguage')}</Text>
       </TouchableOpacity>
+      <LanguageModal
+        modalVisible={modalVisible}
+        setModalVisible={() => {
+          setModalVisible(!modalVisible);
+        }}
+      />
     </LinearGradient>
   );
 };

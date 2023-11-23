@@ -2,7 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
   drawerState: false,
-  drawerScreens: ['Home', 'Dashboard', 'About Me'],
+  drawerScreens: ['home', 'dash', 'aboutMe'],
   currentScreen: 'Home',
 };
 

@@ -5,13 +5,18 @@ import {
   Platform,
   NativeModules,
   TouchableOpacity,
+  Animated,
+  Easing,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {updateDrawerState} from '../../features/drawerReducer/drawerReducer';
 import {updateLoginState} from '../../features/loginReducer/loginReducer';
 const {StatusBarManager} = NativeModules;
 import auth from '@react-native-firebase/auth';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faBars, faX} from '@fortawesome/free-solid-svg-icons';
+import {useTranslation} from 'react-i18next';
 
 const STATUSBAR_HEIGHT = StatusBarManager.HEIGHT;
 
@@ -19,24 +24,61 @@ const TopBarItem = () => {
   const dispatch = useDispatch();
   const drawerState = useSelector(state => state.drawer.drawerState);
   const currentScreen = useSelector(state => state.drawer.currentScreen);
+
+  const animatedRotation = useRef(new Animated.Value(0)).current;
+  const animatedTranslation = useRef(new Animated.Value(0)).current;
+
+  const {t} = useTranslation();
+
+  useEffect(() => {
+    Animated.timing(animatedRotation, {
+      toValue: drawerState ? 15 : 0,
+      duration: 500,
+      easing: Easing.linear,
+      useNativeDriver: false,
+    }).start();
+    Animated.timing(animatedTranslation, {
+      toValue: drawerState ? -15 : 0,
+      duration: 500,
+      easing: Easing.linear,
+      useNativeDriver: false,
+    }).start();
+  }, [drawerState]);
+
+  const interpolatedRotation = animatedRotation.interpolate({
+    inputRange: [0, 15],
+    outputRange: ['0deg', '-15deg'],
+  });
+
+  const AnimatedTouchableOpacity =
+    Animated.createAnimatedComponent(TouchableOpacity);
+
   return (
     <View style={styles.topBarContainer}>
       <View style={styles.topBarRow}>
-        <TouchableOpacity
-          style={{flex: 1, textAlign: 'left'}}
+        <AnimatedTouchableOpacity
+          style={{
+            flex: 1,
+            textAlign: 'left',
+            transform: [
+              {rotate: interpolatedRotation},
+              //{translateX: 10},
+              {translateY: animatedTranslation},
+            ],
+          }}
           onPress={() => {
             dispatch(updateDrawerState());
           }}>
-          <Text>{drawerState ? 'Close' : 'Open'}</Text>
-        </TouchableOpacity>
-        <Text style={styles.titleText}>{currentScreen}</Text>
+          <FontAwesomeIcon icon={drawerState ? faX : faBars} />
+        </AnimatedTouchableOpacity>
+        <Text style={styles.titleText}>{t(currentScreen)}</Text>
         <TouchableOpacity
           style={{flex: 1}}
           onPress={() => {
             dispatch(updateLoginState(false));
             auth().signOut();
           }}>
-          <Text style={{textAlign: 'right'}}>Sign Out</Text>
+          <Text style={{textAlign: 'right'}}>{t('signOut')}</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -52,6 +94,7 @@ const styles = StyleSheet.create({
     borderBottomEndRadius: 10,
     width: '97.5%',
     marginTop: 5,
+    paddingHorizontal: 16,
   },
   topBarRow: {
     marginTop: Platform.OS === 'ios' ? STATUSBAR_HEIGHT : 0,
@@ -61,7 +104,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   titleText: {
-    flex: 1,
+    flex: 2,
     color: '#fff',
     fontSize: 22,
     fontWeight: '300',

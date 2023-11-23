@@ -48,7 +48,7 @@ const CustomTextInput = props => {
         <FontAwesomeIcon
           icon={props.icon}
           size={20}
-          style={[styles.icon, {color: '#000'}]}
+          style={[styles.icon, {color: focusState ? 'white' : 'black'}]}
         />
       </View>
       <TextInput
@@ -59,10 +59,13 @@ const CustomTextInput = props => {
           setFocusState(false);
         }}
         placeholder={props.placeholder}
-        placeholderTextColor={'black'}
+        placeholderTextColor={focusState ? 'white' : 'black'}
         secureTextEntry={props.secureTextEntry}
         onChangeText={props.onChangedText}
-        style={[styles.inputStyle, {transform: [{translateX: 0}]}]}
+        style={[
+          styles.inputStyle,
+          {transform: [{translateX: 0}], color: focusState ? 'white' : 'black'},
+        ]}
       />
       <Animated.View
         style={[
