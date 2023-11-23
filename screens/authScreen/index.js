@@ -18,6 +18,7 @@ import {faLock} from '@fortawesome/free-solid-svg-icons/faLock';
 import {faSignature} from '@fortawesome/free-solid-svg-icons/faSignature';
 import {faArrowUp19} from '@fortawesome/free-solid-svg-icons/faArrowUp19';
 import {faLocationCrosshairs} from '@fortawesome/free-solid-svg-icons/faLocationCrosshairs';
+import {useTranslation} from 'react-i18next';
 
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
@@ -27,6 +28,8 @@ const animatedTranslationYLogo =
   Platform.OS === 'android' ? -(screenHeight * 0.12) : -(screenHeight * 0.09);
 
 const AuthScreen = () => {
+  const {t} = useTranslation();
+
   //Login State for Register Modal
   const [loginState, setLoginState] = useState(true);
 
@@ -97,7 +100,7 @@ const AuthScreen = () => {
       </View>
       {/* Login Container */}
       <View style={[styles.authContainer, {height: screenHeight * 0.7}]}>
-        <Text style={styles.registerTextStyle}>Login</Text>
+        <Text style={styles.registerTextStyle}>{t('login')}</Text>
         <View style={{height: 24}} />
         <Text>{announcement}</Text>
         <CustomTextInput
@@ -109,7 +112,7 @@ const AuthScreen = () => {
           }}
         />
         <CustomTextInput
-          placeholder="Password"
+          placeholder={t('pass')}
           icon={faLock}
           secureTextEntry={true}
           onChangedText={text => {
@@ -117,7 +120,7 @@ const AuthScreen = () => {
           }}
         />
         <CustomButton
-          title="Login"
+          title={t('login')}
           onPress={() => {
             AuthHelper.signInUser(dispatch, email, pass);
           }}
@@ -127,16 +130,14 @@ const AuthScreen = () => {
       <Animated.View
         style={[styles.authContainer, {transform: [{translateY: translateY}]}]}>
         <Text style={[registerTextStyle]}>
-          {loginState
-            ? "If you don't have an account, register here!"
-            : 'Register'}
+          {loginState ? t('registerHelp') : t('register')}
         </Text>
         <TouchableOpacity
           style={{padding: 16}}
           onPress={() => {
             setLoginState(!loginState);
           }}>
-          <Text>Animate</Text>
+          <Text>{loginState ? t('modalOpen') : t('modalClose')}</Text>
         </TouchableOpacity>
         {Platform.OS === 'ios' ? <View style={{height: 24}} /> : null}
         <CustomTextInput
@@ -157,7 +158,7 @@ const AuthScreen = () => {
             styles={{width: '48.5%'}}
             secureTextEntry={false}
             icon={faSignature}
-            placeholder="First name"
+            placeholder={t('fName')}
             onChangedText={text => {
               setFNameRegister(text);
             }}
@@ -166,7 +167,7 @@ const AuthScreen = () => {
             styles={{width: '48.5%'}}
             secureTextEntry={false}
             icon={faSignature}
-            placeholder="Last name"
+            placeholder={t('lName')}
             onChangedText={text => {
               setLNameRegister(text);
             }}
@@ -174,7 +175,7 @@ const AuthScreen = () => {
         </View>
         <CustomTextInput
           secureTextEntry={false}
-          placeholder="Age"
+          placeholder={t('age')}
           icon={faArrowUp19}
           onChangedText={text => {
             setAgeRegister(text);
@@ -182,14 +183,14 @@ const AuthScreen = () => {
         />
         <CustomTextInput
           secureTextEntry={false}
-          placeholder="Gender"
+          placeholder={t('gender')}
           onChangedText={text => {
             setGenderRegister(text);
           }}
         />
         <CustomTextInput
           secureTextEntry={false}
-          placeholder="User color"
+          placeholder={t('userColor')}
           onChangedText={text => {
             setUserColorRegister(text);
           }}
@@ -197,7 +198,7 @@ const AuthScreen = () => {
         <CustomTextInput
           secureTextEntry={false}
           icon={faLock}
-          placeholder="User location"
+          placeholder={t('userLocation')}
           onChangedText={text => {
             setUserLocationRegister(text);
           }}
@@ -212,7 +213,7 @@ const AuthScreen = () => {
             styles={{width: '48.5%'}}
             secureTextEntry={true}
             icon={faLock}
-            placeholder="Password"
+            placeholder={t('pass')}
             onChangedText={text => {
               setPassRegister(text);
             }}
@@ -221,7 +222,7 @@ const AuthScreen = () => {
             styles={{width: '48.5%'}}
             secureTextEntry={true}
             icon={faLock}
-            placeholder="Confirm password"
+            placeholder={t('passConf')}
             onChangedText={text => {
               setPassConfRegister(text);
             }}
@@ -229,7 +230,7 @@ const AuthScreen = () => {
         </View>
 
         <CustomButton
-          title="Register"
+          title={t('register')}
           onPress={() => {
             AuthHelper.registerUser(dispatch, emailRegister, passRegister);
           }}
