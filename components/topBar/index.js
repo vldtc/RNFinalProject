@@ -38,7 +38,7 @@ const TopBarItem = () => {
       useNativeDriver: false,
     }).start();
     Animated.timing(animatedTranslation, {
-      toValue: drawerState ? -15 : 0,
+      toValue: drawerState ? -10 : 0,
       duration: 500,
       easing: Easing.linear,
       useNativeDriver: false,
@@ -46,8 +46,8 @@ const TopBarItem = () => {
   }, [drawerState]);
 
   const interpolatedRotation = animatedRotation.interpolate({
-    inputRange: [0, 15],
-    outputRange: ['0deg', '-15deg'],
+    inputRange: [0, 10],
+    outputRange: ['0deg', '-10deg'],
   });
 
   const AnimatedTouchableOpacity =
@@ -62,7 +62,6 @@ const TopBarItem = () => {
             textAlign: 'left',
             transform: [
               {rotate: interpolatedRotation},
-              //{translateX: 10},
               {translateY: animatedTranslation},
             ],
           }}

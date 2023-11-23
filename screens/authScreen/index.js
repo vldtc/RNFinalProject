@@ -10,14 +10,17 @@ import {
 } from 'react-native';
 import React, {useState, useEffect, useRef} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import {CustomTextInput, CustomButton} from '../../components';
+import {
+  CustomTextInput,
+  CustomButton,
+  CustomDatePicker,
+} from '../../components';
 import {useSelector, useDispatch} from 'react-redux';
 import AuthHelper from '../../helpers/AuthHelper';
 import {faEnvelope} from '@fortawesome/free-solid-svg-icons/faEnvelope';
 import {faLock} from '@fortawesome/free-solid-svg-icons/faLock';
 import {faSignature} from '@fortawesome/free-solid-svg-icons/faSignature';
 import {faArrowUp19} from '@fortawesome/free-solid-svg-icons/faArrowUp19';
-import {faLocationCrosshairs} from '@fortawesome/free-solid-svg-icons/faLocationCrosshairs';
 import {useTranslation} from 'react-i18next';
 
 const screenHeight = Dimensions.get('window').height;
@@ -173,12 +176,11 @@ const AuthScreen = () => {
             }}
           />
         </View>
-        <CustomTextInput
-          secureTextEntry={false}
+        <CustomDatePicker
           placeholder={t('age')}
-          icon={faArrowUp19}
           onChangedText={text => {
             setAgeRegister(text);
+            console.log(ageRegister);
           }}
         />
         <CustomTextInput
