@@ -8,16 +8,12 @@ import {
 } from 'react-native';
 import React, {useRef, useEffect, useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faUser} from '@fortawesome/free-solid-svg-icons/faUser';
 
 const CustomTextInput = props => {
   const [focusState, setFocusState] = useState(false);
 
   const animatedHeight = useRef(new Animated.Value(0)).current;
   const animatedBorder = useRef(new Animated.Value(0)).current;
-
-  const animatedPlaceholderY = useRef(new Animated.Value(0)).current;
-  const animatedPlaceholderX = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     Animated.timing(animatedHeight, {
@@ -77,9 +73,6 @@ const CustomTextInput = props => {
           },
         ]}
       />
-      {/* <Animated.Text style={[styles.placeholder]}>
-        {props.placeholder}
-      </Animated.Text> */}
     </Animated.View>
   );
 };

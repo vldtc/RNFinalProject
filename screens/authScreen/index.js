@@ -26,6 +26,12 @@ import {
   faLocationCrosshairs,
 } from '@fortawesome/free-solid-svg-icons/';
 import {useTranslation} from 'react-i18next';
+import {useForm} from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
@@ -34,8 +40,34 @@ const animatedTranslationY = screenHeight * 0.75;
 const animatedTranslationYLogo =
   Platform.OS === 'android' ? -(screenHeight * 0.12) : -(screenHeight * 0.09);
 
+const schema = yup.object().shape({
+  email: yup
+    .string()
+    .required('Email is required')
+    .matches(emailRegex, 'Invalid email!'),
+  pass: yup
+    .string()
+    .required('Pass is required')
+    .matches(passwordRegex, 'Password is not strong enough!'),
+});
+
 const AuthScreen = () => {
+  //i18n Locale
   const {t} = useTranslation();
+
+  //Hook Form
+  const {
+    controlLogin,
+    handleSubmit,
+    formState: {errors},
+  } = useForm({
+    mode: 'all',
+    resolver: yupResolver(schema),
+    defaultValues: {
+      email: '',
+      pass: '',
+    },
+  });
 
   //Login State for Register Modal
   const [loginState, setLoginState] = useState(true);
@@ -129,7 +161,8 @@ const AuthScreen = () => {
         <CustomButton
           title={t('login')}
           onPress={() => {
-            AuthHelper.signInUser(dispatch, email, pass);
+            //AuthHelper.signInUser(dispatch, email, pass);
+            handleSubmit(formData => {});
           }}
         />
       </View>
@@ -192,7 +225,6 @@ const AuthScreen = () => {
             setGenderRegister(gender);
           }}
         />
-        <Text>{userColorRegister}</Text>
         <CustomColorPick
           colors={[
             '#f8f8f8',
