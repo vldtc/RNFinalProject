@@ -182,7 +182,6 @@ const AuthScreen = () => {
           placeholder={t('age')}
           onChangedText={text => {
             setAgeRegister(text);
-            console.log(ageRegister);
           }}
         />
         <RadioButtonCustom
@@ -192,7 +191,18 @@ const AuthScreen = () => {
           }}
         />
         <CustomColorPick
-          colors={['white', 'yellow', 'blue', 'red', 'black', 'green']}
+          colors={[
+            '#f8f8f8',
+            '#fff700',
+            '#0095ff',
+            '#e42600',
+            '#151515',
+            '#17c200',
+            'custom',
+          ]}
+          onColorChange={color => {
+            setUserColorRegister(color);
+          }}
         />
         <CustomTextInput
           secureTextEntry={false}

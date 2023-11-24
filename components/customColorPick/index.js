@@ -5,17 +5,18 @@ import {
   TouchableOpacity,
   Animated,
   Easing,
+  Alert,
 } from 'react-native';
 import React, {useState, useEffect, useRef} from 'react';
 import {useTranslation} from 'react-i18next';
-import {width} from '@fortawesome/free-solid-svg-icons/faUser';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faD, faDroplet} from '@fortawesome/free-solid-svg-icons';
+import {faPaintBrush, faDroplet} from '@fortawesome/free-solid-svg-icons';
 
 const CustomColorPick = props => {
   const {t} = useTranslation();
 
-  const [currentSelection, setCurrentSelection] = useState('white');
+  const [currentSelection, setCurrentSelection] = useState(props.colors[0]);
+  const [customColor, setCustomColor] = useState('undefined');
 
   const animatedValues = Object.fromEntries(
     props.colors.map(option => [
@@ -43,13 +44,17 @@ const CustomColorPick = props => {
         useNativeDriver: false,
       }).start();
       Animated.timing(animatedValues[color].scale, {
-        toValue: currentSelection === color ? 0.9 : 0.1,
+        toValue: currentSelection === color ? 1 : 0.1,
         duration: 300,
         easing: Easing.bounce,
         useNativeDriver: false,
       }).start();
     });
   }, [currentSelection]);
+
+  useEffect(() => {
+    props.onColorChange(currentSelection);
+  }, []);
 
   return (
     <View style={styles.overallContainerStyle}>
@@ -64,11 +69,20 @@ const CustomColorPick = props => {
         <Text> - {t('userColorInfo')}</Text>
       </View>
       <View style={styles.containerStyle}>
-        {props.colors.map(color => (
+        {props.colors.map((color, index) => (
           <TouchableOpacity
             style={[styles.elementContainerStyle]}
             onPress={() => {
-              setCurrentSelection(color);
+              if (
+                props.colors[props.colors.length - 1] === 'custom' &&
+                index === props.colors.length - 1
+              ) {
+                setCurrentSelection(color);
+                props.onColorChange(customColor);
+              } else {
+                setCurrentSelection(color);
+                props.onColorChange(color);
+              }
             }}>
             <View
               style={{
@@ -76,11 +90,17 @@ const CustomColorPick = props => {
                 width: '100%',
                 backgroundColor: color,
                 borderRadius: 8,
-                borderColor: 'black',
+                borderColor: '#2a2a2a',
                 borderWidth: 0.5,
+                alignItems: 'center',
+                justifyContent: 'center',
                 transform: [{scale: 0.8}],
-              }}
-            />
+              }}>
+              {props.colors[props.colors.length - 1] === 'custom' &&
+                props.colors.length - 1 === index && (
+                  <FontAwesomeIcon icon={faPaintBrush} />
+                )}
+            </View>
             <Animated.View
               style={[
                 styles.backgroundFocus,

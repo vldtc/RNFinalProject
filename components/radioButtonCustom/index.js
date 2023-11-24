@@ -26,6 +26,10 @@ const RadioButtonCustom = props => {
   );
 
   useEffect(() => {
+    props.currentSelection(currentSelection);
+  });
+
+  useEffect(() => {
     props.options.forEach(element => {
       Animated.timing(animatedValues[element].height, {
         toValue: currentSelection === element ? 40 : 2,
@@ -45,13 +49,6 @@ const RadioButtonCustom = props => {
 
   return (
     <View style={styles.containerStyle}>
-      {/* <View
-        style={[
-          styles.elementContainerStyle,
-          {backgroundColor: '#fff000', flex: 0.5},
-        ]}>
-        <Text>{t('gender')}</Text>
-      </View> */}
       {props.options.map((element, index) => (
         <TouchableOpacity
           key={index}
@@ -63,7 +60,7 @@ const RadioButtonCustom = props => {
           style={styles.elementContainerStyle}>
           <Text
             style={{color: currentSelection === element ? 'white' : 'black'}}>
-            {element}
+            {t(element)}
           </Text>
           <Animated.View
             style={[

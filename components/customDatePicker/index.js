@@ -10,8 +10,11 @@ import React, {useState, useRef, useEffect} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faCalendarDays} from '@fortawesome/free-solid-svg-icons';
 import DatePicker from 'react-native-date-picker';
+import {useTranslation} from 'react-i18next';
 
 const CustomDatePicker = props => {
+  const {t} = useTranslation();
+
   const [focusState, setFocusState] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
   const [date, setDate] = useState(new Date());
@@ -108,7 +111,7 @@ const CustomDatePicker = props => {
         androidVariant="iosClone"
         mode="date"
         textColor="#007bff"
-        title={'Date of birth'}
+        title={t('age')}
       />
     </View>
   );
