@@ -5,8 +5,9 @@ import {
   TouchableOpacity,
   Animated,
   Easing,
-  Alert,
+  Modal,
 } from 'react-native';
+import ColorPicker, {Panel1, HueSlider, Preview} from 'reanimated-color-picker';
 import React, {useState, useEffect, useRef} from 'react';
 import {useTranslation} from 'react-i18next';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -17,6 +18,13 @@ const CustomColorPick = props => {
 
   const [currentSelection, setCurrentSelection] = useState(props.colors[0]);
   const [customColor, setCustomColor] = useState('undefined');
+
+  const [showPickerModal, setShowPickerModal] = useState(false);
+
+  const onSelectColor = ({hex}) => {
+    setCustomColor(hex);
+    props.onColorChange(customColor);
+  };
 
   const animatedValues = Object.fromEntries(
     props.colors.map(option => [
@@ -78,7 +86,7 @@ const CustomColorPick = props => {
                 index === props.colors.length - 1
               ) {
                 setCurrentSelection(color);
-                props.onColorChange(customColor);
+                setShowPickerModal(true);
               } else {
                 setCurrentSelection(color);
                 props.onColorChange(color);
@@ -88,7 +96,11 @@ const CustomColorPick = props => {
               style={{
                 height: '100%',
                 width: '100%',
-                backgroundColor: color,
+                backgroundColor:
+                  props.colors[props.colors.length - 1] === 'custom' &&
+                  index === props.colors.length - 1
+                    ? customColor
+                    : color,
                 borderRadius: 8,
                 borderColor: '#2a2a2a',
                 borderWidth: 0.5,
@@ -114,6 +126,36 @@ const CustomColorPick = props => {
           </TouchableOpacity>
         ))}
       </View>
+      <Modal visible={showPickerModal} animationType="slide" transparent={true}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <ColorPicker
+              style={{
+                width: '90%',
+              }}
+              value="red"
+              onComplete={onSelectColor}
+              onChange={({hex}) => setCustomColor(hex)}>
+              <Preview style={{marginBottom: 24}} hideInitialColor />
+              <Panel1 style={{marginBottom: 24}} />
+              <HueSlider />
+            </ColorPicker>
+            <TouchableOpacity
+              style={{
+                marginTop: 24,
+                backgroundColor: '#007bff',
+                paddingHorizontal: 24,
+                paddingVertical: 8,
+                borderRadius: 10,
+              }}
+              onPress={() => {
+                setShowPickerModal(false);
+              }}>
+              <Text style={{color: 'white'}}>Select</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -142,6 +184,30 @@ const styles = StyleSheet.create({
     backgroundColor: '#007bff',
     width: '100%',
     zIndex: -1,
+  },
+  centeredView: {
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: -1,
+  },
+  modalView: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '95%',
+    backgroundColor: 'white',
+    borderRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    paddingVertical: 24,
   },
 });
 

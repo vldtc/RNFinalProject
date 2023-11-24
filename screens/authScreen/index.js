@@ -21,8 +21,10 @@ import {useSelector, useDispatch} from 'react-redux';
 import AuthHelper from '../../helpers/AuthHelper';
 import {faEnvelope} from '@fortawesome/free-solid-svg-icons/faEnvelope';
 import {faLock} from '@fortawesome/free-solid-svg-icons/faLock';
-import {faSignature} from '@fortawesome/free-solid-svg-icons/faSignature';
-import {faArrowUp19} from '@fortawesome/free-solid-svg-icons/faArrowUp19';
+import {
+  faSignature,
+  faLocationCrosshairs,
+} from '@fortawesome/free-solid-svg-icons/';
 import {useTranslation} from 'react-i18next';
 
 const screenHeight = Dimensions.get('window').height;
@@ -190,6 +192,7 @@ const AuthScreen = () => {
             setGenderRegister(gender);
           }}
         />
+        <Text>{userColorRegister}</Text>
         <CustomColorPick
           colors={[
             '#f8f8f8',
@@ -206,7 +209,7 @@ const AuthScreen = () => {
         />
         <CustomTextInput
           secureTextEntry={false}
-          icon={faLock}
+          icon={faLocationCrosshairs}
           placeholder={t('userLocation')}
           onChangedText={text => {
             setUserLocationRegister(text);
