@@ -26,40 +26,71 @@ import {
   faLocationCrosshairs,
 } from '@fortawesome/free-solid-svg-icons/';
 import {useTranslation} from 'react-i18next';
-import {useForm} from 'react-hook-form';
+import {Controller, useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-
+//Screen's dimensions
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
-
-const animatedTranslationY = screenHeight * 0.75;
-const animatedTranslationYLogo =
-  Platform.OS === 'android' ? -(screenHeight * 0.12) : -(screenHeight * 0.09);
-
-const schema = yup.object().shape({
-  email: yup
-    .string()
-    .required('Email is required')
-    .matches(emailRegex, 'Invalid email!'),
-  pass: yup
-    .string()
-    .required('Pass is required')
-    .matches(passwordRegex, 'Password is not strong enough!'),
-});
 
 const AuthScreen = () => {
   //i18n Locale
   const {t} = useTranslation();
 
+  //Regex for validation!
+  const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+  const lettersOnlyRegex = /^[A-Za-z]+$/;
+
+  const required = t('req');
+
+  //Screens platform specific sizes
+  const animatedTranslationY = screenHeight * 0.75;
+  const animatedTranslationYLogo =
+    Platform.OS === 'android' ? -(screenHeight * 0.12) : -(screenHeight * 0.09);
+
+  //Validation schema for Hook Form
+  const schema = yup.object().shape({
+    email: yup.string().required(required).matches(emailRegex, t('invEmail')),
+    pass: yup.string().required(required),
+  });
+
+  const schemaRegister = yup.object().shape({
+    emailRegister: yup
+      .string()
+      .required(required)
+      .matches(emailRegex, t('invEmail')),
+    fNameRegister: yup
+      .string()
+      .required(required)
+      .matches(lettersOnlyRegex, t('lettersOnly')),
+
+    lNameRegister: yup
+      .string()
+      .required(required)
+      .matches(lettersOnlyRegex, t('lettersOnly')),
+
+    dobRegister: yup.string().required(required),
+
+    userLocationRegister: yup.string().required(required),
+
+    passRegister: yup
+      .string()
+      .required(required)
+      .matches(passwordRegex, t('invPass')),
+
+    passConfirmRegister: yup
+      .string()
+      .required(required)
+      .oneOf([yup.ref('passRegister'), null], t('passMatch')),
+  });
+
   //Hook Form
   const {
-    controlLogin,
-    handleSubmit,
-    formState: {errors},
+    control: loginControl,
+    handleSubmit: handleSubmitLogin,
+    formState: {errors: loginErrors},
   } = useForm({
     mode: 'all',
     resolver: yupResolver(schema),
@@ -69,27 +100,34 @@ const AuthScreen = () => {
     },
   });
 
+  const {
+    control: registerControl,
+    handleSubmit: handleSubmitRegister,
+    formState: {errors: registerErrors},
+  } = useForm({
+    mode: 'all',
+    resolver: yupResolver(schemaRegister),
+    defaultValues: {
+      emailRegister: '',
+      fNameRegister: '',
+      lNameRegister: '',
+      genderRegister: '',
+      userColorRegister: '',
+      userLocationRegister: '',
+      passRegister: '',
+      passConfirmRegister: '',
+    },
+  });
+
+  console.log(loginErrors);
+  console.log(registerErrors);
+
   //Login State for Register Modal
   const [loginState, setLoginState] = useState(true);
 
   //Login Redux
   const announcement = useSelector(state => state.login.announcement);
   const dispatch = useDispatch();
-
-  //Text Inputs for Login
-  const [email, setEmail] = useState('');
-  const [pass, setPass] = useState('');
-
-  //Text Inputs for Register
-  const [emailRegister, setEmailRegister] = useState('');
-  const [passRegister, setPassRegister] = useState('');
-  const [passConfRegister, setPassConfRegister] = useState('');
-  const [ageRegister, setAgeRegister] = useState('');
-  const [fNameRegister, setFNameRegister] = useState('');
-  const [lNameRegister, setLNameRegister] = useState('');
-  const [genderRegister, setGenderRegister] = useState('');
-  const [userColorRegister, setUserColorRegister] = useState('');
-  const [userLocationRegister, setUserLocationRegister] = useState('');
 
   const registerTextStyle = loginState
     ? styles.textStyle
@@ -142,28 +180,51 @@ const AuthScreen = () => {
         <Text style={styles.registerTextStyle}>{t('login')}</Text>
         <View style={{height: 24}} />
         <Text>{announcement}</Text>
-        <CustomTextInput
-          secureTextEntry={false}
-          placeholder="Email"
-          icon={faEnvelope}
-          onChangedText={text => {
-            setEmail(text);
+        <Controller
+          control={loginControl}
+          rules={{required: true, validate: true}}
+          render={({field: {onChange, value}}) => {
+            return (
+              <CustomTextInput
+                value={value}
+                secureTextEntry={false}
+                placeholder="Email"
+                icon={faEnvelope}
+                onChangedText={text => {
+                  onChange(text);
+                }}
+                error={loginErrors.email}
+              />
+            );
           }}
+          name="email"
         />
-        <CustomTextInput
-          placeholder={t('pass')}
-          icon={faLock}
-          secureTextEntry={true}
-          onChangedText={text => {
-            setPass(text);
+        <Controller
+          control={loginControl}
+          rules={{required: true, validate: false}}
+          render={({field: {onChange, value}}) => {
+            return (
+              <CustomTextInput
+                value={value}
+                placeholder={t('pass')}
+                icon={faLock}
+                secureTextEntry={true}
+                onChangedText={text => {
+                  onChange(text);
+                }}
+                error={loginErrors.pass}
+              />
+            );
           }}
+          name="pass"
         />
+
         <CustomButton
           title={t('login')}
-          onPress={() => {
-            //AuthHelper.signInUser(dispatch, email, pass);
-            handleSubmit(formData => {});
-          }}
+          onPress={handleSubmitLogin(formData => {
+            console.log(formData);
+            AuthHelper.signInUser(dispatch, formData.email, formData.pass);
+          })}
         />
       </View>
       {/* Register Container */}
@@ -173,20 +234,31 @@ const AuthScreen = () => {
           {loginState ? t('registerHelp') : t('register')}
         </Text>
         <TouchableOpacity
-          style={{padding: 16}}
+          style={{padding: 24}}
           onPress={() => {
             setLoginState(!loginState);
           }}>
           <Text>{loginState ? t('modalOpen') : t('modalClose')}</Text>
         </TouchableOpacity>
         {Platform.OS === 'ios' ? <View style={{height: 24}} /> : null}
-        <CustomTextInput
-          secureTextEntry={false}
-          icon={faEnvelope}
-          placeholder="Email"
-          onChangedText={text => {
-            setEmailRegister(text);
+        <Controller
+          control={registerControl}
+          rules={{required: true, validate: true}}
+          render={({field: {onChange, value}}) => {
+            return (
+              <CustomTextInput
+                value={value}
+                secureTextEntry={false}
+                icon={faEnvelope}
+                placeholder="Email"
+                onChangedText={text => {
+                  onChange(text);
+                }}
+                error={registerErrors.emailRegister}
+              />
+            );
           }}
+          name="emailRegister"
         />
         <View
           style={{
@@ -194,58 +266,127 @@ const AuthScreen = () => {
             justifyContent: 'space-between',
             width: '80%',
           }}>
-          <CustomTextInput
-            styles={{width: '48.5%'}}
-            secureTextEntry={false}
-            icon={faSignature}
-            placeholder={t('fName')}
-            onChangedText={text => {
-              setFNameRegister(text);
+          <Controller
+            control={registerControl}
+            rules={{required: true, validate: true}}
+            render={({field: {onChange, value}}) => {
+              return (
+                <CustomTextInput
+                  value={value}
+                  styles={{width: '48.5%'}}
+                  secureTextEntry={false}
+                  icon={faSignature}
+                  placeholder={t('fName')}
+                  onChangedText={text => {
+                    onChange(text);
+                  }}
+                  error={registerErrors.fNameRegister}
+                />
+              );
             }}
+            name="fNameRegister"
           />
-          <CustomTextInput
-            styles={{width: '48.5%'}}
-            secureTextEntry={false}
-            icon={faSignature}
-            placeholder={t('lName')}
-            onChangedText={text => {
-              setLNameRegister(text);
+          <Controller
+            control={registerControl}
+            rules={{required: true, validate: true}}
+            render={({field: {onChange, value}}) => {
+              return (
+                <CustomTextInput
+                  value={value}
+                  styles={{width: '48.5%'}}
+                  secureTextEntry={false}
+                  icon={faSignature}
+                  placeholder={t('lName')}
+                  onChangedText={text => {
+                    onChange(text);
+                  }}
+                  error={registerErrors.lNameRegister}
+                />
+              );
             }}
+            name="lNameRegister"
           />
         </View>
-        <CustomDatePicker
-          placeholder={t('age')}
-          onChangedText={text => {
-            setAgeRegister(text);
+        <Controller
+          control={registerControl}
+          rules={{required: true, validate: true}}
+          render={({field: {onChange, value}}) => {
+            return (
+              <CustomDatePicker
+                value={value}
+                placeholder={t('age')}
+                onChangedText={text => {
+                  onChange(text);
+                }}
+                error={registerErrors.dobRegister}
+              />
+            );
           }}
+          name="dobRegister"
         />
-        <RadioButtonCustom
-          options={['Male', 'Female']}
-          currentSelection={gender => {
-            setGenderRegister(gender);
+        <Controller
+          control={registerControl}
+          rules={{required: true, validate: true}}
+          render={({field: {onChange, value}}) => {
+            return (
+              <RadioButtonCustom
+                value={value}
+                options={['Male', 'Female']}
+                onCurrentSelection={gender => {
+                  onChange(gender);
+                }}
+                error={registerErrors.genderRegister}
+              />
+            );
           }}
+          name="genderRegister"
         />
-        <CustomColorPick
-          colors={[
-            '#f8f8f8',
-            '#fff700',
-            '#0095ff',
-            '#e42600',
-            '#151515',
-            '#17c200',
-            'custom',
-          ]}
-          onColorChange={color => {
-            setUserColorRegister(color);
+        <Controller
+          control={registerControl}
+          rules={{required: true, validate: true}}
+          render={({field: {onChange, value}}) => {
+            return (
+              <CustomColorPick
+                value={value}
+                colors={[
+                  '#f8f8f8',
+                  '#fff700',
+                  '#0095ff',
+                  '#e42600',
+                  '#151515',
+                  '#17c200',
+                  'custom',
+                ]}
+                onColorChange={color => {
+                  onChange(color);
+                }}
+                error={registerErrors.userColorRegister}
+                infoVisible={true}
+                infoHeader={t('colorInfo')}
+                infoBody={t('colorInfoBody')}
+              />
+            );
           }}
+          name="userColorRegister"
         />
-        <CustomTextInput
-          secureTextEntry={false}
-          icon={faLocationCrosshairs}
-          placeholder={t('userLocation')}
-          onChangedText={text => {
-            setUserLocationRegister(text);
+        <Controller
+          control={registerControl}
+          rules={{required: true, validate: true}}
+          render={({field: {onChange, value}}) => {
+            return (
+              <CustomTextInput
+                value={value}
+                secureTextEntry={false}
+                icon={faLocationCrosshairs}
+                placeholder={t('userLocation')}
+                onChangedText={text => {
+                  onChange(text);
+                }}
+                error={registerErrors.userLocationRegister}
+              />
+            );
           }}
+          name="userLocationRegister"
         />
         <View
           style={{
@@ -253,31 +394,57 @@ const AuthScreen = () => {
             justifyContent: 'space-between',
             width: '80%',
           }}>
-          <CustomTextInput
-            styles={{width: '48.5%'}}
-            secureTextEntry={true}
-            icon={faLock}
-            placeholder={t('pass')}
-            onChangedText={text => {
-              setPassRegister(text);
+          <Controller
+            control={registerControl}
+            rules={{required: true, validate: true}}
+            render={({field: {onChange, value}}) => {
+              return (
+                <CustomTextInput
+                  value={value}
+                  styles={{width: '48.5%'}}
+                  secureTextEntry={true}
+                  icon={faLock}
+                  placeholder={t('pass')}
+                  onChangedText={text => {
+                    onChange(text);
+                  }}
+                  error={registerErrors.passRegister}
+                  infoVisible={true}
+                  infoHeader={t('passInfo')}
+                  infoTitle={t('passInfoBody')}
+                />
+              );
             }}
+            name="passRegister"
           />
-          <CustomTextInput
-            styles={{width: '48.5%'}}
-            secureTextEntry={true}
-            icon={faLock}
-            placeholder={t('passConf')}
-            onChangedText={text => {
-              setPassConfRegister(text);
+          <Controller
+            control={registerControl}
+            rules={{required: true, validate: true}}
+            render={({field: {onChange, value}}) => {
+              return (
+                <CustomTextInput
+                  value={value}
+                  styles={{width: '48.5%'}}
+                  secureTextEntry={true}
+                  icon={faLock}
+                  placeholder={t('passConf')}
+                  onChangedText={text => {
+                    onChange(text);
+                  }}
+                  error={registerErrors.passConfirmRegister}
+                />
+              );
             }}
+            name="passConfirmRegister"
           />
         </View>
 
         <CustomButton
           title={t('register')}
-          onPress={() => {
-            AuthHelper.registerUser(dispatch, emailRegister, passRegister);
-          }}
+          onPress={handleSubmitRegister(formData => {
+            console.log(formData);
+            //AuthHelper.signInUser(dispatch, formData.email, formData.pass);
+          })}
         />
       </Animated.View>
     </LinearGradient>

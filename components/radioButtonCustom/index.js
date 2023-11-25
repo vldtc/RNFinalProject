@@ -10,6 +10,8 @@ import React, {useState, useRef, useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 
 const RadioButtonCustom = props => {
+  const {value, options, onCurrentSelection, error} = props;
+
   const {t} = useTranslation();
 
   //const options = ['Male', 'Female'];
@@ -26,7 +28,7 @@ const RadioButtonCustom = props => {
   );
 
   useEffect(() => {
-    props.currentSelection(currentSelection);
+    props.onCurrentSelection(currentSelection);
   });
 
   useEffect(() => {
@@ -49,12 +51,24 @@ const RadioButtonCustom = props => {
 
   return (
     <View style={styles.containerStyle}>
+      {error && error.message.length > 0 && (
+        <Text
+          style={{
+            position: 'absolute',
+            top: -18,
+            marginStart: 8,
+            fontWeight: '200',
+            color: '#ff0000',
+          }}>
+          {error.message}
+        </Text>
+      )}
       {props.options.map((element, index) => (
         <TouchableOpacity
           key={index}
           onPress={() => {
             setCurrentSelection(element);
-            props.currentSelection(element);
+            props.onCurrentSelection(element);
           }}
           activeOpacity={1}
           style={styles.elementContainerStyle}>

@@ -13,6 +13,8 @@ import DatePicker from 'react-native-date-picker';
 import {useTranslation} from 'react-i18next';
 
 const CustomDatePicker = props => {
+  const {value, placeholder, onChangedText, error} = props;
+
   const {t} = useTranslation();
 
   const [focusState, setFocusState] = useState(false);
@@ -59,6 +61,18 @@ const CustomDatePicker = props => {
 
   return (
     <View style={styles.containerStyle}>
+      {error && error.message.length > 0 && (
+        <Text
+          style={{
+            position: 'absolute',
+            top: -18,
+            marginStart: 8,
+            fontWeight: '200',
+            color: '#ff0000',
+          }}>
+          {error.message}
+        </Text>
+      )}
       <View>
         <FontAwesomeIcon
           icon={faCalendarDays}
@@ -78,10 +92,9 @@ const CustomDatePicker = props => {
         onBlur={() => {
           setFocusState(false);
         }}
-        placeholder={props.placeholder}
+        placeholder={placeholder}
         placeholderTextColor={focusState ? 'white' : 'black'}
-        secureTextEntry={props.secureTextEntry}
-        onChangeText={props.onChangedText}
+        onChangeText={onChangedText}
         style={[
           styles.inputStyle,
           {transform: [{translateX: 0}], color: focusState ? 'white' : 'black'},
