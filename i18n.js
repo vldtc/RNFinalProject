@@ -42,10 +42,13 @@ const resources = {
       userColor: 'Marker color',
       userLocation: 'Location',
       passConf: 'Confirm password',
-      //Main Stack
+      //Main Stack Screens
       home: 'Home',
       dash: 'Dashboard',
       aboutMe: 'About me',
+      people: 'People',
+
+      //Locale Languages
       changeLanguage: 'Change language',
       en: 'English  🇺🇸',
       ro: 'Romanian  🇷🇴',
@@ -101,6 +104,9 @@ const resources = {
       home: 'Acasă',
       dash: 'Panou de control',
       aboutMe: 'Despre mine',
+      people: 'Oameni',
+
+      //Locale Languages
       changeLanguage: 'Schimbă limba',
       en: 'Engleză  🇺🇸',
       ro: 'Română  🇷🇴',
@@ -152,10 +158,13 @@ const resources = {
       userColor: 'Color del marcador',
       userLocation: 'Ubicación',
       passConf: 'Confirmar contraseña',
-      //Main Stack
+      //Main Stack Screens
       home: 'Inicio',
       dash: 'Tablero',
       aboutMe: 'Acerca de mí',
+      people: 'Personas',
+
+      //Locale Languages
       changeLanguage: 'Cambiar idioma',
       en: 'Inglés  🇺🇸',
       ro: 'Rumano  🇷🇴',
@@ -207,10 +216,13 @@ const resources = {
       userColor: 'Colore del marcatore',
       userLocation: 'Posizione',
       passConf: 'Conferma password',
-      //Main Stack
+      //Main Stack Screens
       home: 'Home',
       dash: 'Dashboard',
       aboutMe: 'Su di me',
+      people: 'Persone',
+
+      //Locale Languages
       changeLanguage: 'Cambia lingua',
       en: 'Inglese  🇺🇸',
       ro: 'Rumeno  🇷🇴',
@@ -262,10 +274,13 @@ const resources = {
       userColor: 'Couleur du marqueur',
       userLocation: 'Emplacement',
       passConf: 'Confirmer le mot de passe',
-      //Main Stack
+      //Main Stack Screens
       home: 'Accueil',
       dash: 'Tableau de bord',
       aboutMe: 'À propos de moi',
+      people: 'Personnes',
+
+      //Locale Languages
       changeLanguage: 'Changer de langue',
       en: 'Anglais  🇺🇸',
       ro: 'Roumain  🇷🇴',
@@ -318,10 +333,13 @@ const resources = {
       userColor: 'Markerfarbe',
       userLocation: 'Ort',
       passConf: 'Passwort bestätigen',
-      //Main Stack
+      //Main Stack Screens
       home: 'Startseite',
       dash: 'Dashboard',
       aboutMe: 'Über mich',
+      people: 'Menschen',
+
+      //Locale languages
       changeLanguage: 'Sprache ändern',
       en: 'Englisch  🇺🇸',
       ro: 'Rumänisch  🇷🇴',
@@ -373,10 +391,13 @@ const resources = {
       userColor: 'Цвет маркера',
       userLocation: 'Местоположение',
       passConf: 'Подтверждение пароля',
-      //Main Stack
+      //Main Stack Screen
       home: 'Главная',
       dash: 'Панель управления',
       aboutMe: 'Обо мне',
+      people: 'Люди ',
+
+      //Locale Languages
       changeLanguage: 'Изменить язык',
       en: 'Английский  🇺🇸',
       ro: 'Румынский  🇷🇴',
@@ -428,10 +449,13 @@ const resources = {
       userColor: 'Jelző szín',
       userLocation: 'Hely',
       passConf: 'Jelszó megerősítése',
-      //Main Stack
+      //Main Stack Screens
       home: 'Kezdőlap',
       dash: 'Irányítópult',
       aboutMe: 'Rólam',
+      people: 'Emberek',
+
+      //Locale Languages
       changeLanguage: 'Nyelv váltása',
       en: 'Angol  🇺🇸',
       ro: 'Román  🇷🇴',

@@ -1,6 +1,12 @@
 import {View, Platform, StyleSheet, Animated, Easing} from 'react-native';
 import React, {useEffect, useRef} from 'react';
-import {DrawerMenu, HomeScreen, DashScreen, AboutMeScreen} from '../index';
+import {
+  DrawerMenu,
+  HomeScreen,
+  DashScreen,
+  AboutMeScreen,
+  PeopleScreen,
+} from '../index';
 import {TopBarItem} from '../../components';
 import {useSelector} from 'react-redux';
 
@@ -78,12 +84,14 @@ const NavigatorScreen = () => {
         <TopBarItem />
         {(() => {
           switch (currentScreen) {
-            case 'Home':
+            case 'home':
               return <HomeScreen />;
-            case 'Dashboard':
+            case 'dash':
               return <DashScreen />;
-            case 'About Me':
+            case 'aboutMe':
               return <AboutMeScreen />;
+            case 'people':
+              return <PeopleScreen />;
             default:
               return null; // or some default component
           }

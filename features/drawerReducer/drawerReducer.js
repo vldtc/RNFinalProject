@@ -2,8 +2,8 @@ import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
   drawerState: false,
-  drawerScreens: ['home', 'dash', 'aboutMe'],
-  currentScreen: 'Home',
+  drawerScreens: ['home', 'dash', 'aboutMe', 'people'],
+  currentScreen: 'home',
 };
 
 const drawerSlice = createSlice({

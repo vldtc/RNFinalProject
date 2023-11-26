@@ -30,6 +30,8 @@ import {Controller, useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import LanguageStorage from '../../helpers/LanguageStorage';
+import FirestoreHelper from '../../helpers/FirestoreHelper';
+import auth from '@react-native-firebase/auth';
 
 //Screen's dimensions
 const screenHeight = Dimensions.get('window').height;
@@ -128,6 +130,7 @@ const AuthScreen = () => {
       fNameRegister: '',
       lNameRegister: '',
       genderRegister: '',
+      dobRegister: '',
       userColorRegister: '',
       userLocationRegister: '',
       passRegister: '',
@@ -491,7 +494,32 @@ const AuthScreen = () => {
           title={t('register')}
           onPress={handleSubmitRegister(formData => {
             console.log(formData);
-            //AuthHelper.signInUser(dispatch, formData.email, formData.pass);
+            AuthHelper.registerUser(
+              dispatch,
+              formData.emailRegister,
+              formData.passRegister,
+              () => {
+                console.log('Auth callback triggered!');
+                FirestoreHelper.addUser(
+                  auth().currentUser.uid,
+                  {
+                    age: formData.dobRegister,
+                    author: 'Vldt',
+                    email: formData.emailRegister,
+                    firstName: formData.fNameRegister,
+                    gender: formData.genderRegister,
+                    lastName: formData.fNameRegister,
+                    userColor: formData.userColorRegister,
+                    userId: auth().currentUser.uid,
+                    userLocation: formData.userLocationRegister,
+                  },
+                  () => {
+                    console.log('onSuccess callback triggered');
+                    setLoginState(false);
+                  },
+                );
+              },
+            );
           })}
         />
       </Animated.View>

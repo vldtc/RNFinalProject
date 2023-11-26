@@ -21,16 +21,17 @@ class AuthHelper {
     }
   }
 
-  static async registerUser(dispatch, email, password) {
+  static async registerUser(dispatch, email, password, onSuccess) {
     try {
       await auth().createUserWithEmailAndPassword(email, password);
       dispatch(updateAnnouncement('Registration success! Please login now.'));
       setTimeout(() => {
         dispatch(updateAnnouncement(''));
       }, 5000);
+      onSuccess();
     } catch (e) {
       console.error('Error registering user:', e.message);
-      dispatch(updateAnnouncement('Registration failed!'));
+      dispatch(updateAnnouncement(e.message));
       setTimeout(() => {
         dispatch(updateAnnouncement(''));
       }, 5000);

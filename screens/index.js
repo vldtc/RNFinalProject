@@ -4,6 +4,7 @@ import DrawerMenu from './drawerMenu';
 import HomeScreen from './homeScreen';
 import DashScreen from './dashScreen';
 import AboutMeScreen from './aboutMeScreen';
+import PeopleScreen from './peopleScreen';
 
 export {
   HomeScreen,
@@ -12,4 +13,5 @@ export {
   DrawerMenu,
   DashScreen,
   AboutMeScreen,
+  PeopleScreen,
 };
