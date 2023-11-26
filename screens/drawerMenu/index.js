@@ -19,11 +19,7 @@ const DrawerMenu = () => {
   const {t} = useTranslation();
 
   return (
-    <LinearGradient
-      colors={['#00bbff', '#001eff']}
-      // start={{x: 0, y: 0}}
-      // end={{x: 1, y: 1}}
-      style={styles.drawerView}>
+    <LinearGradient colors={['#00bbff', '#001eff']} style={styles.drawerView}>
       {drawerScreens.map((element, index) => (
         <TouchableOpacity
           style={[
@@ -67,7 +63,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
-    //backgroundColor: '#00bbff',
     justifyContent: 'center',
     padding: 16,
   },

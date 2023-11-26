@@ -29,6 +29,7 @@ import {useTranslation} from 'react-i18next';
 import {Controller, useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import LanguageStorage from '../../helpers/LanguageStorage';
 
 //Screen's dimensions
 const screenHeight = Dimensions.get('window').height;
@@ -36,7 +37,7 @@ const screenWidth = Dimensions.get('window').width;
 
 const AuthScreen = () => {
   //i18n Locale
-  const {t} = useTranslation();
+  const {t, i18n} = useTranslation();
 
   //Regex for validation!
   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -155,6 +156,16 @@ const AuthScreen = () => {
       useNativeDriver: false,
     }).start();
   }, [loginState]);
+
+  //Run the saved language!
+  getLanguage = async () => {
+    const lng = (await LanguageStorage.getValue('lng')) || 'en';
+    i18n.changeLanguage(lng);
+    console.log(lng);
+  };
+  useEffect(() => {
+    getLanguage();
+  }, []);
 
   return (
     //Screen

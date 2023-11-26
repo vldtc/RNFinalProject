@@ -1,12 +1,14 @@
 import {View, Text, Modal, StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
+import LanguageStorage from '../../helpers/LanguageStorage';
 
 const LanguageModal = props => {
   const {t, i18n} = useTranslation();
 
   const changeLanguage = language => {
     i18n.changeLanguage(language);
+    LanguageStorage.setValue('lng', language);
     props.setModalVisible();
   };
 

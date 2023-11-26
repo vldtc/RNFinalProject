@@ -1,6 +1,7 @@
 // i18n.js
 import i18n from 'i18next';
 import {initReactI18next} from 'react-i18next';
+import LanguageStorage from './helpers/LanguageStorage';
 
 const resources = {
   en: {
@@ -436,6 +437,13 @@ const resources = {
       signOut: 'Kijelentkezés',
     },
   },
+};
+
+const getLanguage = async () => {
+  const lng = (await LanguageStorage.getValue('lng')) || 'en';
+  //i18n.changeLanguage(lng);
+  console.log(lng);
+  return lng;
 };
 
 i18n.use(initReactI18next).init({
