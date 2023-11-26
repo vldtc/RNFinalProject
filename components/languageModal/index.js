@@ -6,6 +6,9 @@ import LanguageStorage from '../../helpers/LanguageStorage';
 const LanguageModal = props => {
   const {t, i18n} = useTranslation();
 
+  const languageList = ['en', 'ro', 'es', 'it', 'fr', 'de', 'ru', 'hu'];
+  const currentLanguage = i18n.language;
+
   const changeLanguage = language => {
     i18n.changeLanguage(language);
     LanguageStorage.setValue('lng', language);
@@ -32,46 +35,35 @@ const LanguageModal = props => {
                 marginBottom: 8,
               }}
             />
-            <TouchableOpacity
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => changeLanguage('en')}>
-              <Text style={styles.textStyle}>{t('en')}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => changeLanguage('ro')}>
-              <Text style={styles.textStyle}>{t('ro')}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => changeLanguage('es')}>
-              <Text style={styles.textStyle}>{t('es')}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => changeLanguage('it')}>
-              <Text style={styles.textStyle}>{t('it')}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => changeLanguage('fr')}>
-              <Text style={styles.textStyle}>{t('fr')}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => changeLanguage('de')}>
-              <Text style={styles.textStyle}>{t('de')}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => changeLanguage('ru')}>
-              <Text style={styles.textStyle}>{t('ru')}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => changeLanguage('hu')}>
-              <Text style={styles.textStyle}>{t('hu')}</Text>
-            </TouchableOpacity>
+            {languageList.map(language => {
+              return (
+                <TouchableOpacity
+                  style={[
+                    styles.button,
+                    {
+                      backgroundColor:
+                        currentLanguage === language ? '#fff000' : '#2196F3',
+                      elevation: currentLanguage === language ? 5 : 0,
+                      shadowColor: '#000',
+                      shadowOffset: {
+                        width: 0,
+                        height: 2,
+                      },
+                      shadowOpacity: currentLanguage === language ? 0.5 : 0,
+                      shadowRadius: 3.84,
+                    },
+                  ]}
+                  onPress={() => changeLanguage(language)}>
+                  <Text
+                    style={[
+                      styles.textStyle,
+                      {color: currentLanguage === language ? 'black' : 'white'},
+                    ]}>
+                    {t(language)}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
             <View
               style={{
                 width: '100%',
@@ -84,7 +76,9 @@ const LanguageModal = props => {
             <TouchableOpacity
               style={[styles.button, styles.buttonClose]}
               onPress={() => props.setModalVisible()}>
-              <Text style={styles.textStyle}>{t('cancel')}</Text>
+              <Text style={[styles.textStyle, {color: 'white'}]}>
+                {t('cancel')}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -130,7 +124,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#2196F3',
   },
   textStyle: {
-    color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
   },

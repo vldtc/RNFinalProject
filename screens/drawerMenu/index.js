@@ -16,7 +16,9 @@ const DrawerMenu = () => {
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  const {t} = useTranslation();
+  const {t, i18n} = useTranslation();
+
+  const currentLanguage = i18n.language;
 
   return (
     <LinearGradient colors={['#00bbff', '#001eff']} style={styles.drawerView}>
@@ -33,12 +35,28 @@ const DrawerMenu = () => {
             dispatch(updateCurrentScreen(element));
             dispatch(updateDrawerState());
           }}>
-          <Text style={styles.textMenu} key={index}>
+          <Text
+            style={[
+              styles.textMenu,
+              {color: currentScreen === element ? 'black' : 'white'},
+            ]}
+            key={index}>
             {t(element)}
           </Text>
         </TouchableOpacity>
       ))}
       <View style={styles.divider} />
+      <View
+        style={{
+          backgroundColor: 'white',
+          padding: 8,
+          borderRadius: 8,
+          marginBottom: 8,
+        }}>
+        <Text style={{marginStart: 8, fontWeight: '300'}}>
+          {t(currentLanguage)}
+        </Text>
+      </View>
       <TouchableOpacity
         onPress={() => {
           setModalVisible(!modalVisible);
@@ -46,6 +64,7 @@ const DrawerMenu = () => {
         style={[styles.menuItemContainer, {backgroundColor: '#ffffff'}]}>
         <Text style={styles.textMenu}>{t('changeLanguage')}</Text>
       </TouchableOpacity>
+
       <LanguageModal
         modalVisible={modalVisible}
         setModalVisible={() => {

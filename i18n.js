@@ -12,6 +12,7 @@ const resources = {
       lettersOnly: 'Only letters allowed.',
       invPass: 'Invalid password',
       passMatch: 'Passwords do not match',
+      passContainsNameOrDob: 'Do not include name, or date of birth!',
 
       //Colors Modal
       colorInfo: 'Color infomation',
@@ -66,6 +67,7 @@ const resources = {
       lettersOnly: 'Doar litere permise.',
       invPass: 'Parolă invalidă',
       passMatch: 'Parolele nu se potrivesc',
+      passContainsNameOrDob: 'Nu includeți numele sau data de naștere!',
 
       //Colors Modal
       colorInfo: 'Informații despre culoare',
@@ -120,6 +122,7 @@ const resources = {
       lettersOnly: 'Solo se permiten letras.',
       invPass: 'Contraseña inválida',
       passMatch: 'Las contraseñas no coinciden',
+      passContainsNameOrDob: 'No incluir nombre ni fecha de nacimiento',
 
       //Colors Modal
       colorInfo: 'Información de color',
@@ -174,6 +177,7 @@ const resources = {
       lettersOnly: 'Sono permesse solo lettere.',
       invPass: 'Password non valida',
       passMatch: 'Le password non corrispondono',
+      passContainsNameOrDob: 'Non includere nome o data di nascita!',
 
       //Colors Modal
       colorInfo: 'Informazioni colore',
@@ -228,6 +232,7 @@ const resources = {
       lettersOnly: 'Seules les lettres sont autorisées.',
       invPass: 'Mot de passe invalide',
       passMatch: 'Les mots de passe ne correspondent pas',
+      passContainsNameOrDob: 'Ne pas inclure le nom ou la date de naissance !',
 
       //Colors Modal
       colorInfo: 'Informations sur la couleur',
@@ -282,6 +287,7 @@ const resources = {
       lettersOnly: 'Nur Buchstaben erlaubt.',
       invPass: 'Ungültiges Passwort',
       passMatch: 'Die Passwörter stimmen nicht überein',
+      passContainsNameOrDob: 'Nicht den Namen oder das Geburtsdatum verwenden!',
 
       //Colors Modal
       colorInfo: 'Farbinformationen',
@@ -337,6 +343,7 @@ const resources = {
       lettersOnly: 'Разрешены только буквы.',
       invPass: 'Неверный пароль',
       passMatch: 'Пароли не совпадают',
+      passContainsNameOrDob: 'Не включать имя или дату рождения!',
 
       //Colors Modal
       colorInfo: 'Информация о цвете',
@@ -391,6 +398,7 @@ const resources = {
       lettersOnly: 'Csak betűk engedélyezettek.',
       invPass: 'Érvénytelen jelszó',
       passMatch: 'A jelszavak nem egyeznek',
+      passContainsNameOrDob: 'Ne tartalmazza a nevet vagy a születési dátumot!',
 
       //Colors Modal
       colorInfo: 'Szín információ',

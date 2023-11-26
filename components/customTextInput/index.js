@@ -13,8 +13,15 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {faCircleInfo} from '@fortawesome/free-solid-svg-icons';
 
 const CustomTextInput = props => {
-  const {value, placeholder, icon, secureTextEntry, onChangedText, error} =
-    props;
+  const {
+    value,
+    placeholder,
+    icon,
+    secureTextEntry,
+    onChangedText,
+    error,
+    isLowerError,
+  } = props;
 
   const [focusState, setFocusState] = useState(false);
   const [infoState, setInfoState] = useState(false);
@@ -51,7 +58,7 @@ const CustomTextInput = props => {
         <Text
           style={{
             position: 'absolute',
-            top: -18,
+            top: isLowerError ? 44 : -18,
             marginStart: 8,
             fontWeight: '200',
             color: '#ff0000',

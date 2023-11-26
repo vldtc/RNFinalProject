@@ -79,7 +79,21 @@ const AuthScreen = () => {
     passRegister: yup
       .string()
       .required(required)
-      .matches(passwordRegex, t('invPass')),
+      .matches(passwordRegex, t('invPass'))
+      .test('no-name-or-dob', t('passContainsNameOrDob'), function (value) {
+        const {fNameRegister, lNameRegister, dobRegister} = this.parent;
+        if (
+          value.toLowerCase().includes(fNameRegister.toLowerCase()) ||
+          value.toLowerCase().includes(lNameRegister.toLowerCase()) ||
+          value.toLowerCase().includes(dobRegister.toLowerCase())
+        ) {
+          return this.createError({
+            path: 'passRegister',
+            message: t('passContainsNameOrDob'),
+          });
+        }
+        return true;
+      }),
 
     passConfirmRegister: yup
       .string()
@@ -92,6 +106,7 @@ const AuthScreen = () => {
     control: loginControl,
     handleSubmit: handleSubmitLogin,
     formState: {errors: loginErrors},
+    setValue: setLoginValues,
   } = useForm({
     mode: 'all',
     resolver: yupResolver(schema),
@@ -185,12 +200,26 @@ const AuthScreen = () => {
           ]}>
           Map My Friends
         </Animated.Text>
+        {announcement.length > 0 && (
+          <View
+            style={{
+              position: 'absolute',
+              transform: [{translateY: loginState ? 50 : -70}],
+              backgroundColor: 'white',
+              paddingHorizontal: 16,
+              paddingVertical: 8,
+              borderRadius: 8,
+            }}>
+            <Text style={{color: '#ff1500', fontWeight: '400'}}>
+              {announcement}
+            </Text>
+          </View>
+        )}
       </View>
       {/* Login Container */}
       <View style={[styles.authContainer, {height: screenHeight * 0.7}]}>
         <Text style={styles.registerTextStyle}>{t('login')}</Text>
         <View style={{height: 24}} />
-        <Text>{announcement}</Text>
         <Controller
           control={loginControl}
           rules={{required: true, validate: true}}
@@ -245,7 +274,14 @@ const AuthScreen = () => {
           {loginState ? t('registerHelp') : t('register')}
         </Text>
         <TouchableOpacity
-          style={{padding: 24}}
+          style={{
+            marginTop: 8,
+            padding: 16,
+            backgroundColor: '#fff000',
+            width: '60%',
+            alignItems: 'center',
+            borderRadius: 16,
+          }}
           onPress={() => {
             setLoginState(!loginState);
           }}>
@@ -423,6 +459,7 @@ const AuthScreen = () => {
                   infoVisible={true}
                   infoHeader={t('passInfo')}
                   infoTitle={t('passInfoBody')}
+                  isLowerError={true}
                 />
               );
             }}
