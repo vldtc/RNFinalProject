@@ -217,8 +217,8 @@ const resources = {
       userLocation: 'Posizione',
       passConf: 'Conferma password',
       //Main Stack Screens
-      home: 'Home',
-      dash: 'Dashboard',
+      home: 'Casa',
+      dash: 'Pannello di controllo',
       aboutMe: 'Su di me',
       people: 'Persone',
 
@@ -335,7 +335,7 @@ const resources = {
       passConf: 'Passwort bestätigen',
       //Main Stack Screens
       home: 'Startseite',
-      dash: 'Dashboard',
+      dash: 'Armaturenbrett',
       aboutMe: 'Über mich',
       people: 'Menschen',
 
@@ -469,13 +469,6 @@ const resources = {
       signOut: 'Kijelentkezés',
     },
   },
-};
-
-const getLanguage = async () => {
-  const lng = (await LanguageStorage.getValue('lng')) || 'en';
-  //i18n.changeLanguage(lng);
-  console.log(lng);
-  return lng;
 };
 
 i18n.use(initReactI18next).init({

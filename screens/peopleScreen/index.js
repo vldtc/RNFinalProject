@@ -1,5 +1,5 @@
 import {View, Text, Button, FlatList, StyleSheet} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import FirestoreHelper from '../../helpers/FirestoreHelper';
 
 const PeopleScreen = () => {
@@ -14,10 +14,14 @@ const PeopleScreen = () => {
     }
   };
 
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
   return (
     <View style={styles.containerStyle}>
-      <Button title="Fetch users" onPress={fetchUsers} />
       <FlatList
+        style={styles.flatListStyle}
         data={userDetails}
         keyExtractor={item => item.userId}
         renderItem={({item}) => (
@@ -35,6 +39,7 @@ const PeopleScreen = () => {
             <Text>{item.gender}</Text>
             <Text>{item.userColor}</Text>
             <Text>{item.userLocation}</Text>
+            <Text>{item.age}</Text>
           </View>
         )}
       />
@@ -45,6 +50,9 @@ const PeopleScreen = () => {
 const styles = StyleSheet.create({
   containerStyle: {
     alignItems: 'center',
+  },
+  flatListStyle: {
+    marginBottom: 16,
   },
 });
 

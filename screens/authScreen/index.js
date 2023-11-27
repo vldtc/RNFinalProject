@@ -24,6 +24,8 @@ import {faLock} from '@fortawesome/free-solid-svg-icons/faLock';
 import {
   faSignature,
   faLocationCrosshairs,
+  faFolderOpen,
+  faFolderClosed,
 } from '@fortawesome/free-solid-svg-icons/';
 import {useTranslation} from 'react-i18next';
 import {Controller, useForm} from 'react-hook-form';
@@ -32,6 +34,7 @@ import * as yup from 'yup';
 import LanguageStorage from '../../helpers/LanguageStorage';
 import FirestoreHelper from '../../helpers/FirestoreHelper';
 import auth from '@react-native-firebase/auth';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 //Screen's dimensions
 const screenHeight = Dimensions.get('window').height;
@@ -278,17 +281,25 @@ const AuthScreen = () => {
         </Text>
         <TouchableOpacity
           style={{
-            marginTop: 8,
+            marginTop: 16,
             padding: 16,
-            backgroundColor: '#fff000',
-            width: '60%',
+            backgroundColor: '#ffee00ff',
+            width: '100%',
+            flexDirection: 'row',
             alignItems: 'center',
-            borderRadius: 16,
+            justifyContent: 'center',
           }}
           onPress={() => {
             setLoginState(!loginState);
           }}>
-          <Text>{loginState ? t('modalOpen') : t('modalClose')}</Text>
+          <FontAwesomeIcon
+            icon={loginState ? faFolderOpen : faFolderClosed}
+            size={20}
+            color="black"
+          />
+          <Text style={{marginStart: 16}}>
+            {loginState ? t('modalOpen') : t('modalClose')}
+          </Text>
         </TouchableOpacity>
         {Platform.OS === 'ios' ? <View style={{height: 24}} /> : null}
         <Controller
@@ -459,10 +470,10 @@ const AuthScreen = () => {
                     onChange(text);
                   }}
                   error={registerErrors.passRegister}
-                  infoVisible={true}
+                  infoVisible
                   infoHeader={t('passInfo')}
                   infoTitle={t('passInfoBody')}
-                  isLowerError={true}
+                  isLowerError
                 />
               );
             }}

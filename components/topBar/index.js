@@ -15,7 +15,11 @@ import {updateLoginState} from '../../features/loginReducer/loginReducer';
 const {StatusBarManager} = NativeModules;
 import auth from '@react-native-firebase/auth';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faBars, faX} from '@fortawesome/free-solid-svg-icons';
+import {
+  faBars,
+  faX,
+  faArrowRightFromBracket,
+} from '@fortawesome/free-solid-svg-icons';
 import {useTranslation} from 'react-i18next';
 
 const STATUSBAR_HEIGHT = StatusBarManager.HEIGHT;
@@ -68,16 +72,31 @@ const TopBarItem = () => {
           onPress={() => {
             dispatch(updateDrawerState());
           }}>
-          <FontAwesomeIcon icon={drawerState ? faX : faBars} />
+          <FontAwesomeIcon
+            icon={drawerState ? faX : faBars}
+            color="white"
+            size={20}
+          />
         </AnimatedTouchableOpacity>
         <Text style={styles.titleText}>{t(currentScreen)}</Text>
         <TouchableOpacity
-          style={{flex: 1}}
+          style={{
+            flex: 1,
+          }}
           onPress={() => {
             dispatch(updateLoginState(false));
             auth().signOut();
           }}>
-          <Text style={{textAlign: 'right'}}>{t('signOut')}</Text>
+          <Text
+            style={{
+              marginEnd: 8,
+              color: 'white',
+              fontSize: 14,
+              fontWeight: '200',
+              alignSelf: 'flex-end',
+            }}>
+            {t('signOut')}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -93,19 +112,19 @@ const styles = StyleSheet.create({
     borderBottomEndRadius: 10,
     width: '97.5%',
     marginTop: 5,
-    paddingHorizontal: 16,
   },
   topBarRow: {
     marginTop: Platform.OS === 'ios' ? STATUSBAR_HEIGHT : 0,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 16,
+    marginHorizontal: 16,
+    marginBottom: 8,
   },
   titleText: {
     flex: 2,
     color: '#fff',
-    fontSize: 22,
+    fontSize: 26,
     fontWeight: '300',
     textAlign: 'center',
   },
