@@ -3,6 +3,7 @@ import {createSlice} from '@reduxjs/toolkit';
 const initialState = {
   isUserLoggedIn: false,
   announcement: '',
+  userDetails: [],
 };
 
 const loginSlice = createSlice({
@@ -15,9 +16,14 @@ const loginSlice = createSlice({
     updateAnnouncement: (state, action) => {
       state.announcement = action.payload;
     },
+    updateUserDetails: (state, action) => {
+      state.userDetails = action.payload;
+      console.log('Hello user', state.userDetails);
+    },
   },
 });
 
-export const {updateLoginState, updateAnnouncement} = loginSlice.actions;
+export const {updateLoginState, updateAnnouncement, updateUserDetails} =
+  loginSlice.actions;
 
 export default loginSlice.reducer;

@@ -28,6 +28,27 @@ class FirestoreHelper {
       return null;
     }
   }
+
+  static async getUserProfile(userId) {
+    try {
+      const documentSnapshot = await firestore()
+        .collection('UserProfile')
+        .doc(userId)
+        .get();
+
+      if (documentSnapshot.exists) {
+        const userData = documentSnapshot.data();
+        console.log('Data received', userData);
+        return userData;
+      } else {
+        console.log('Document does not exist');
+        return null;
+      }
+    } catch (e) {
+      console.error('Error fetching user data', e);
+      return null;
+    }
+  }
 }
 
 export default FirestoreHelper;

@@ -2,12 +2,27 @@ import auth from '@react-native-firebase/auth';
 import {
   updateLoginState,
   updateAnnouncement,
+  updateUserDetails,
 } from '../features/loginReducer/loginReducer';
+import FirestoreHelper from './FirestoreHelper';
 
 class AuthHelper {
   static async signInUser(dispatch, email, password) {
     try {
-      if (await auth().signInWithEmailAndPassword(email, password)) {
+      const userCredential = await auth().signInWithEmailAndPassword(
+        email,
+        password,
+      );
+      if (userCredential.user) {
+        const userProfile = await FirestoreHelper.getUserProfile(
+          userCredential.user.uid,
+        );
+
+        if (userProfile.exists) {
+          const userDetails = userProfile.data();
+
+          dispatch(updateUserDetails(userDetails));
+        }
         dispatch(updateLoginState(true));
       }
     } catch (e) {

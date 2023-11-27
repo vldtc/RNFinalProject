@@ -69,6 +69,7 @@ const DrawerMenu = () => {
       <TouchableOpacity
         onPress={() => {
           dispatch(updateLoginState(false));
+          dispatch(updateDrawerState());
           auth().signOut();
         }}
         style={[styles.menuItemContainer, {backgroundColor: '#ffffff'}]}>
