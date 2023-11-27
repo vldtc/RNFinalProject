@@ -8,10 +8,16 @@ const ProfileScreen = () => {
   return (
     <View style={styles.container}>
       <TopBarItem />
-      <Text>ProfileScreen</Text>
-      <Text>
-        {userProfile.firstName} {userProfile.lastName}
-      </Text>
+      <View style={styles.profileContainer}>
+        <Text>
+          {userProfile.firstName} {userProfile.lastName}
+        </Text>
+        <Text>{userProfile.email}</Text>
+        <Text>{userProfile.gender}</Text>
+        <Text>{userProfile.userColor}</Text>
+        <Text>{userProfile.userLocation}</Text>
+        <Text>{userProfile.age}</Text>
+      </View>
     </View>
   );
 };
@@ -21,6 +27,15 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     alignItems: 'center',
+  },
+  profileContainer: {
+    flex: 1,
+    width: '95%',
+    borderRadius: 50,
+    margin: 16,
+    backgroundColor: '#fff000',
+    alignItems: 'center',
+    padding: 16,
   },
 });
 
