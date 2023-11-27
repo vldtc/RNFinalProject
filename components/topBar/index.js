@@ -7,19 +7,14 @@ import {
   TouchableOpacity,
   Animated,
   Easing,
+  Alert,
 } from 'react-native';
 import React, {useEffect, useRef} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {updateDrawerState} from '../../features/drawerReducer/drawerReducer';
-import {updateLoginState} from '../../features/loginReducer/loginReducer';
 const {StatusBarManager} = NativeModules;
-import auth from '@react-native-firebase/auth';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {
-  faBars,
-  faX,
-  faArrowRightFromBracket,
-} from '@fortawesome/free-solid-svg-icons';
+import {faBars, faX} from '@fortawesome/free-solid-svg-icons';
 import {useTranslation} from 'react-i18next';
 
 const STATUSBAR_HEIGHT = StatusBarManager.HEIGHT;
@@ -84,8 +79,7 @@ const TopBarItem = () => {
             flex: 1,
           }}
           onPress={() => {
-            dispatch(updateLoginState(false));
-            auth().signOut();
+            Alert.alert('Profile to be implemented!');
           }}>
           <Text
             style={{
@@ -95,7 +89,7 @@ const TopBarItem = () => {
               fontWeight: '200',
               alignSelf: 'flex-end',
             }}>
-            {t('signOut')}
+            {t('profile')}
           </Text>
         </TouchableOpacity>
       </View>

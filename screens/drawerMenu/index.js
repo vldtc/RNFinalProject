@@ -5,9 +5,11 @@ import {
   updateCurrentScreen,
   updateDrawerState,
 } from '../../features/drawerReducer/drawerReducer';
+import {updateLoginState} from '../../features/loginReducer/loginReducer';
 import LinearGradient from 'react-native-linear-gradient';
 import {LanguageModal} from '../../components';
 import {useTranslation} from 'react-i18next';
+import auth from '@react-native-firebase/auth';
 
 const DrawerMenu = () => {
   const dispatch = useDispatch();
@@ -63,6 +65,14 @@ const DrawerMenu = () => {
         }}
         style={[styles.menuItemContainer, {backgroundColor: '#ffffff'}]}>
         <Text style={styles.textMenu}>{t('changeLanguage')}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          dispatch(updateLoginState(false));
+          auth().signOut();
+        }}
+        style={[styles.menuItemContainer, {backgroundColor: '#ffffff'}]}>
+        <Text style={styles.textMenu}>{t('signOut')}</Text>
       </TouchableOpacity>
 
       <LanguageModal
