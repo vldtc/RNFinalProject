@@ -4,6 +4,7 @@ const initialState = {
   drawerState: false,
   drawerScreens: ['home', 'dash', 'aboutMe', 'people'],
   currentScreen: 'home',
+  isOutsideDrawer: false,
 };
 
 const drawerSlice = createSlice({
@@ -16,9 +17,13 @@ const drawerSlice = createSlice({
     updateCurrentScreen: (state, action) => {
       state.currentScreen = action.payload;
     },
+    updateIsOutsideDrawer: state => {
+      state.isOutsideDrawer = !state.isOutsideDrawer;
+    },
   },
 });
 
-export const {updateDrawerState, updateCurrentScreen} = drawerSlice.actions;
+export const {updateDrawerState, updateCurrentScreen, updateIsOutsideDrawer} =
+  drawerSlice.actions;
 
 export default drawerSlice.reducer;

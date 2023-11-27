@@ -1,6 +1,6 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {AuthScreen, NavigatorScreen} from '../screens';
+import {AuthScreen, NavigatorScreen, ProfileScreen} from '../screens';
 import {useSelector} from 'react-redux';
 
 const Stack = createNativeStackNavigator();
@@ -26,6 +26,7 @@ const Navigator = () => {
           headerShown: false,
         }}>
         <Stack.Screen name="Navigator" component={NavigatorScreen} />
+        <Stack.Screen name="Profile" component={ProfileScreen} />
       </Stack.Group>
     );
   };

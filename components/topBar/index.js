@@ -11,11 +11,15 @@ import {
 } from 'react-native';
 import React, {useEffect, useRef} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {updateDrawerState} from '../../features/drawerReducer/drawerReducer';
+import {
+  updateDrawerState,
+  updateIsOutsideDrawer,
+} from '../../features/drawerReducer/drawerReducer';
 const {StatusBarManager} = NativeModules;
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faBars, faX} from '@fortawesome/free-solid-svg-icons';
+import {faBars, faX, faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 import {useTranslation} from 'react-i18next';
+import {useNavigation} from '@react-navigation/native';
 
 const STATUSBAR_HEIGHT = StatusBarManager.HEIGHT;
 
@@ -23,11 +27,14 @@ const TopBarItem = () => {
   const dispatch = useDispatch();
   const drawerState = useSelector(state => state.drawer.drawerState);
   const currentScreen = useSelector(state => state.drawer.currentScreen);
+  const isOutsideDrawer = useSelector(state => state.drawer.isOutsideDrawer);
 
   const animatedRotation = useRef(new Animated.Value(0)).current;
   const animatedTranslation = useRef(new Animated.Value(0)).current;
 
   const {t} = useTranslation();
+
+  const navigation = useNavigation();
 
   useEffect(() => {
     Animated.timing(animatedRotation, {
@@ -55,43 +62,66 @@ const TopBarItem = () => {
   return (
     <View style={styles.topBarContainer}>
       <View style={styles.topBarRow}>
-        <AnimatedTouchableOpacity
-          style={{
-            flex: 1,
-            textAlign: 'left',
-            transform: [
-              {rotate: interpolatedRotation},
-              {translateY: animatedTranslation},
-            ],
-          }}
-          onPress={() => {
-            dispatch(updateDrawerState());
-          }}>
-          <FontAwesomeIcon
-            icon={drawerState ? faX : faBars}
-            color="white"
-            size={20}
-          />
-        </AnimatedTouchableOpacity>
-        <Text style={styles.titleText}>{t(currentScreen)}</Text>
-        <TouchableOpacity
-          style={{
-            flex: 1,
-          }}
-          onPress={() => {
-            Alert.alert('Profile to be implemented!');
-          }}>
-          <Text
+        {isOutsideDrawer ? (
+          <TouchableOpacity
             style={{
-              marginEnd: 8,
-              color: 'white',
-              fontSize: 14,
-              fontWeight: '200',
-              alignSelf: 'flex-end',
+              flex: 1,
+              textAlign: 'left',
+            }}
+            onPress={() => {
+              navigation.goBack();
+              dispatch(updateIsOutsideDrawer());
             }}>
-            {t('profile')}
-          </Text>
-        </TouchableOpacity>
+            <FontAwesomeIcon icon={faArrowLeft} color="white" size={20} />
+          </TouchableOpacity>
+        ) : (
+          <AnimatedTouchableOpacity
+            style={{
+              flex: 1,
+              textAlign: 'left',
+              transform: [
+                {rotate: interpolatedRotation},
+                {translateY: animatedTranslation},
+              ],
+            }}
+            onPress={() => {
+              dispatch(updateDrawerState());
+            }}>
+            <FontAwesomeIcon
+              icon={drawerState ? faX : faBars}
+              color="white"
+              size={20}
+            />
+          </AnimatedTouchableOpacity>
+        )}
+        <Text style={styles.titleText}>{t(currentScreen)}</Text>
+        {!isOutsideDrawer ? (
+          <TouchableOpacity
+            style={{
+              flex: 1,
+            }}
+            onPress={() => {
+              navigation.navigate('Profile');
+              dispatch(updateIsOutsideDrawer());
+            }}>
+            <Text
+              style={{
+                marginEnd: 8,
+                color: 'white',
+                fontSize: 14,
+                fontWeight: '200',
+                alignSelf: 'flex-end',
+              }}>
+              {t('profile')}
+            </Text>
+          </TouchableOpacity>
+        ) : (
+          <View
+            style={{
+              flex: 1,
+            }}
+          />
+        )}
       </View>
     </View>
   );
