@@ -269,7 +269,17 @@ const AuthScreen = () => {
           title={t('login')}
           onPress={handleSubmitLogin(formData => {
             console.log(formData);
-            AuthHelper.signInUser(dispatch, formData.email, formData.pass);
+            AuthHelper.signInUser(
+              dispatch,
+              formData.email,
+              formData.pass,
+              () => {
+                FirestoreHelper.getUserProfile(
+                  auth().currentUser.uid,
+                  dispatch,
+                );
+              },
+            );
           })}
         />
       </View>

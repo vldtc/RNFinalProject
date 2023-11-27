@@ -94,7 +94,9 @@ const TopBarItem = () => {
             />
           </AnimatedTouchableOpacity>
         )}
-        <Text style={styles.titleText}>{t(currentScreen)}</Text>
+        <Text style={styles.titleText}>
+          {!isOutsideDrawer ? t(currentScreen) : t('profile')}
+        </Text>
         {!isOutsideDrawer ? (
           <TouchableOpacity
             style={{

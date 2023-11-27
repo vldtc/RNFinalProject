@@ -1,4 +1,5 @@
 import firestore from '@react-native-firebase/firestore';
+import {updateUserDetails} from '../features/loginReducer/loginReducer';
 
 class FirestoreHelper {
   // Function to fetch all users
@@ -29,21 +30,16 @@ class FirestoreHelper {
     }
   }
 
-  static async getUserProfile(userId) {
+  static async getUserProfile(userId, dispatch) {
     try {
       const documentSnapshot = await firestore()
         .collection('UserProfile')
         .doc(userId)
         .get();
 
-      if (documentSnapshot.exists) {
-        const userData = documentSnapshot.data();
-        console.log('Data received', userData);
-        return userData;
-      } else {
-        console.log('Document does not exist');
-        return null;
-      }
+      const userDetails = documentSnapshot.data();
+
+      dispatch(updateUserDetails(userDetails));
     } catch (e) {
       console.error('Error fetching user data', e);
       return null;

@@ -7,24 +7,11 @@ import {
 import FirestoreHelper from './FirestoreHelper';
 
 class AuthHelper {
-  static async signInUser(dispatch, email, password) {
+  static async signInUser(dispatch, email, password, onSuccess) {
     try {
-      const userCredential = await auth().signInWithEmailAndPassword(
-        email,
-        password,
-      );
-      if (userCredential.user) {
-        const userProfile = await FirestoreHelper.getUserProfile(
-          userCredential.user.uid,
-        );
-
-        if (userProfile.exists) {
-          const userDetails = userProfile.data();
-
-          dispatch(updateUserDetails(userDetails));
-        }
-        dispatch(updateLoginState(true));
-      }
+      await auth().signInWithEmailAndPassword(email, password);
+      dispatch(updateLoginState(true));
+      onSuccess();
     } catch (e) {
       console.error('Error signing in:', e.message);
       dispatch(
