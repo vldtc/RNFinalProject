@@ -9,7 +9,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 
-  [GMSServices provideAPIKey:@"AIzaSyBpT0FHCjClpJcOXXBtF1s6WHOUq_vGn9w"]; // add this line using the api key obtained from Google Console
+  [GMSServices provideAPIKey:@ENV_GOOGLE_MAPS_API_KEY]; // add this line using the api key obtained from Google Console
 
   [FIRApp configure];
 

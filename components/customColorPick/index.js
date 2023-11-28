@@ -16,6 +16,7 @@ import {
   faDroplet,
   faCircleInfo,
 } from '@fortawesome/free-solid-svg-icons';
+import LinearGradient from 'react-native-linear-gradient';
 
 const CustomColorPick = props => {
   const {value, colors, onColorChange, error} = props;
@@ -47,7 +48,7 @@ const CustomColorPick = props => {
   useEffect(() => {
     colors.forEach(color => {
       Animated.timing(animatedValues[color].height, {
-        toValue: currentSelection === color ? 40 : 2,
+        toValue: currentSelection === color ? 60 : 2,
         duration: 300,
         easing: Easing.bounce,
         useNativeDriver: false,
@@ -59,7 +60,7 @@ const CustomColorPick = props => {
         useNativeDriver: false,
       }).start();
       Animated.timing(animatedValues[color].scale, {
-        toValue: currentSelection === color ? 1 : 0.1,
+        toValue: currentSelection === color ? 0.9 : 0.1,
         duration: 300,
         easing: Easing.bounce,
         useNativeDriver: false,
@@ -138,11 +139,16 @@ const CustomColorPick = props => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 transform: [{scale: 0.8}],
+                overflow: 'hidden',
               }}>
               {colors[colors.length - 1] === 'custom' &&
                 colors.length - 1 === index && (
                   <FontAwesomeIcon icon={faPaintBrush} />
                 )}
+              <LinearGradient
+                colors={['#ffffff0d', '#ffffff8e']}
+                style={styles.highlightContainer}
+              />
             </View>
             <Animated.View
               style={[
@@ -220,16 +226,24 @@ const styles = StyleSheet.create({
   containerStyle: {
     flexDirection: 'row',
     alignItems: 'center',
-    height: 40,
-    width: '85%',
+    height: 60,
+    width: '95%',
     marginBottom: 24,
   },
   elementContainerStyle: {
     flex: 1,
     height: '100%',
-    marginHorizontal: 8,
+    marginHorizontal: 4,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  highlightContainer: {
+    position: 'absolute',
+    height: '100%',
+    width: '150%',
+    backgroundColor: '#ffffff2d',
+    transform: [{rotate: '35deg'}, {translateY: 30}],
+    zIndex: -1,
   },
   backgroundFocus: {
     position: 'absolute',

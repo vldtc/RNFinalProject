@@ -1,8 +1,5 @@
-import {View, Text, Button} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import FirestoreHelper from '../../helpers/FirestoreHelper';
-import auth from '@react-native-firebase/auth';
-import {useSelector, useDispatch} from 'react-redux';
+import {View, Text} from 'react-native';
+import React from 'react';
 
 const HomeScreen = () => {
   return (
