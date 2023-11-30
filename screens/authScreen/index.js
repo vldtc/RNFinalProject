@@ -16,7 +16,6 @@ import {
   CustomDatePicker,
   RadioButtonCustom,
   CustomColorPick,
-  CustomLocation,
 } from '../../components';
 import {useSelector, useDispatch} from 'react-redux';
 import AuthHelper from '../../helpers/AuthHelper';
@@ -446,7 +445,7 @@ const AuthScreen = () => {
           rules={{required: true, validate: true}}
           render={({field: {onChange, value}}) => {
             return (
-              <CustomLocation
+              <CustomTextInput
                 value={value}
                 secureTextEntry={false}
                 icon={faLocationCrosshairs}
@@ -455,11 +454,6 @@ const AuthScreen = () => {
                   onChange(text);
                 }}
                 error={registerErrors.userLocationRegister}
-                infoVisible
-                infoHeader={'Location needed '}
-                infoTitle={
-                  'Map My Friends require your location in order to let your friends know where you are.'
-                }
               />
             );
           }}

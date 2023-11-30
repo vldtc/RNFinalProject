@@ -4,6 +4,8 @@ const initialState = {
   isUserLoggedIn: false,
   announcement: '',
   userDetails: [],
+  allUsersDetails: [],
+  allMarkers: [],
 };
 
 const loginSlice = createSlice({
@@ -18,12 +20,22 @@ const loginSlice = createSlice({
     },
     updateUserDetails: (state, action) => {
       state.userDetails = action.payload;
-      console.log('Hello user', state.userDetails);
+    },
+    updateMarkers: (state, action) => {
+      state.allMarkers = action.payload;
+    },
+    updateAllUsers: (state, action) => {
+      state.allUsersDetails = action.payload;
     },
   },
 });
 
-export const {updateLoginState, updateAnnouncement, updateUserDetails} =
-  loginSlice.actions;
+export const {
+  updateLoginState,
+  updateAnnouncement,
+  updateUserDetails,
+  updateAllUsers,
+  updateMarkers,
+} = loginSlice.actions;
 
 export default loginSlice.reducer;

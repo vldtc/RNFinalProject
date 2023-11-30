@@ -40,7 +40,7 @@ const resources = {
       Male: 'Male',
       Female: 'Female',
       userColor: 'Marker color',
-      userLocation: 'Location',
+      userLocation: 'City',
       passConf: 'Confirm password',
       //Main Stack Screens
       home: 'Home',
@@ -98,7 +98,7 @@ const resources = {
       Male: 'Bărbat',
       Female: 'Femeie',
       userColor: 'Culoare marcator',
-      userLocation: 'Locație',
+      userLocation: 'Oras',
       passConf: 'Confirmă parola',
       //Main Stack
       home: 'Acasă',

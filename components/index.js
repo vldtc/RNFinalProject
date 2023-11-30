@@ -6,6 +6,7 @@ import CustomDatePicker from './customDatePicker';
 import RadioButtonCustom from './radioButtonCustom';
 import CustomColorPick from './customColorPick';
 import CustomLocation from './customLocation';
+import CustomMarker from './customMarker';
 
 export {
   TopBarItem,
@@ -16,4 +17,5 @@ export {
   RadioButtonCustom,
   CustomColorPick,
   CustomLocation,
+  CustomMarker,
 };

@@ -12,8 +12,23 @@ class FirestoreHelper {
         const id = documentSnapshot.id;
         users.push({id, ...user});
       });
-      console.log('Data retrieved', users);
       return users;
+    } catch (error) {
+      console.error('Error fetching users!', error);
+      return [];
+    }
+  }
+
+  static async getAllMarkers() {
+    try {
+      const markers = [];
+      const querySnapshot = await firestore().collection('UserMyPlaces').get();
+      querySnapshot.forEach(documentSnapshot => {
+        const marker = documentSnapshot.data();
+        const id = documentSnapshot.id;
+        markers.push({id, ...marker});
+      });
+      return markers;
     } catch (error) {
       console.error('Error fetching users!', error);
       return [];

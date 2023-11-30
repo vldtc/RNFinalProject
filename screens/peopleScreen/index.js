@@ -1,14 +1,17 @@
 import {View, Text, Button, FlatList, StyleSheet} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import FirestoreHelper from '../../helpers/FirestoreHelper';
+import {useSelector, useDispatch} from 'react-redux';
+import {updateAllUsers} from '../../features/loginReducer/loginReducer';
 
 const PeopleScreen = () => {
-  const [userDetails, setUserDetails] = useState([]);
+  const dispatch = useDispatch();
+  const allUsers = useSelector(state => state.login.allUsersDetails);
 
   const fetchUsers = async () => {
     try {
       const users = await FirestoreHelper.getAllUsers();
-      setUserDetails(users);
+      dispatch(updateAllUsers(users));
     } catch (error) {
       console.error('Error fetching users:', error);
     }
@@ -22,7 +25,7 @@ const PeopleScreen = () => {
     <View style={styles.containerStyle}>
       <FlatList
         style={styles.flatListStyle}
-        data={userDetails}
+        data={allUsers}
         keyExtractor={item => item.userId}
         renderItem={({item}) => (
           <View

@@ -4,7 +4,6 @@ class LanguageStorage {
   setValue = async (key, value) => {
     try {
       await AsyncStorage.setItem(key, value);
-      console.log('Default language has been set', value);
     } catch (exception) {
       console.log(exception);
     }
