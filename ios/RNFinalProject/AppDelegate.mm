@@ -1,7 +1,6 @@
 #import "AppDelegate.h"
 #import <Firebase.h>
 #import <GoogleMaps/GoogleMaps.h>
-
 #import <React/RCTBundleURLProvider.h>
 
 @implementation AppDelegate
@@ -9,7 +8,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 
-  [GMSServices provideAPIKey:@ENV_GOOGLE_MAPS_API_KEY]; // add this line using the api key obtained from Google Console
+  // Use the `RNConfig` class to access environment variables
+    [GMSServices provideAPIKey:@"ENV_GOOGLE_MAPS_API_KEY"]; // add this line using the api key obtained from Google Console
+
 
   [FIRApp configure];
 

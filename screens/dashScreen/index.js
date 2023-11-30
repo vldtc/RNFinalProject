@@ -1,12 +1,12 @@
 import {View, Text, StyleSheet} from 'react-native';
 import React from 'react';
-import MapView, {Marker, PROVIDER_DEFAULT} from 'react-native-maps';
+import MapView, {PROVIDER_DEFAULT, PROVIDER_GOOGLE} from 'react-native-maps';
 
 const DashScreen = () => {
   return (
     <View style={styles.container}>
       <MapView
-        provider={PROVIDER_DEFAULT} // remove if not using Google Maps
+        provider={PROVIDER_GOOGLE} // remove if not using Google Maps
         style={styles.map}
         region={{
           latitude: 51.509865,
@@ -22,9 +22,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
+    alignItems: 'center',
   },
   map: {
     flex: 1,
+    width: '100%',
     margin: 16,
   },
 });
