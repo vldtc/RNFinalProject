@@ -23,7 +23,7 @@ const DrawerMenu = () => {
   const currentLanguage = i18n.language;
 
   return (
-    <LinearGradient colors={['#00bbff', '#001eff']} style={styles.drawerView}>
+    <LinearGradient colors={['#5dd2fc', '#001cf4']} style={styles.drawerView}>
       {drawerScreens.map((element, index) => (
         <TouchableOpacity
           style={[

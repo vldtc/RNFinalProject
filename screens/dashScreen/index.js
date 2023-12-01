@@ -41,7 +41,6 @@ const DashScreen = () => {
             allUsers && allUsers.length > 0
               ? allUsers.find(user => user.userId === element.userId)
               : null;
-          console.log(element.userLocation);
 
           return (
             <CustomMarker
@@ -70,7 +69,6 @@ const styles = StyleSheet.create({
   map: {
     flex: 1,
     width: '100%',
-    margin: 16,
   },
 });
 

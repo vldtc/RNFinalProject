@@ -24,8 +24,6 @@ import {faLock} from '@fortawesome/free-solid-svg-icons/faLock';
 import {
   faSignature,
   faLocationCrosshairs,
-  faFolderOpen,
-  faFolderClosed,
 } from '@fortawesome/free-solid-svg-icons/';
 import {useTranslation} from 'react-i18next';
 import {Controller, useForm} from 'react-hook-form';
@@ -34,7 +32,6 @@ import * as yup from 'yup';
 import LanguageStorage from '../../helpers/LanguageStorage';
 import FirestoreHelper from '../../helpers/FirestoreHelper';
 import auth from '@react-native-firebase/auth';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 //Screen's dimensions
 const screenHeight = Dimensions.get('window').height;
@@ -286,29 +283,16 @@ const AuthScreen = () => {
       {/* Register Container */}
       <Animated.View
         style={[styles.authContainer, {transform: [{translateY: translateY}]}]}>
-        <Text style={[registerTextStyle]}>
-          {loginState ? t('registerHelp') : t('register')}
-        </Text>
         <TouchableOpacity
-          style={{
-            marginTop: 16,
-            padding: 16,
-            backgroundColor: '#ffee00ff',
-            width: '100%',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
+          style={{justifyContent: 'center', alignItems: 'center'}}
           onPress={() => {
             setLoginState(!loginState);
           }}>
-          <FontAwesomeIcon
-            icon={loginState ? faFolderOpen : faFolderClosed}
-            size={20}
-            color="black"
-          />
-          <Text style={{marginStart: 16}}>
-            {loginState ? t('modalOpen') : t('modalClose')}
+          <Text style={[registerTextStyle]}>
+            {loginState ? t('registerHelp') : t('register')}
+          </Text>
+          <Text style={{marginVertical: 16, fontWeight: '100'}}>
+            {loginState ? 'Click here to open' : 'Click here to close'}
           </Text>
         </TouchableOpacity>
         {Platform.OS === 'ios' ? <View style={{height: 24}} /> : null}
@@ -586,7 +570,7 @@ const styles = StyleSheet.create({
   textStyle: {
     fontSize: 16,
     fontWeight: '200',
-    marginTop: 8,
+    marginTop: 16,
   },
   registerTextStyle: {
     fontSize: 30,
