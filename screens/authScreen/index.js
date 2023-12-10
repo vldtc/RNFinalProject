@@ -103,12 +103,11 @@ const AuthScreen = () => {
       .oneOf([yup.ref('passRegister'), null], t('passMatch')),
   });
 
-  //Hook Form
+  //Hook Formb Login
   const {
     control: loginControl,
     handleSubmit: handleSubmitLogin,
     formState: {errors: loginErrors},
-    setValue: setLoginValues,
   } = useForm({
     mode: 'all',
     resolver: yupResolver(schema),
@@ -117,6 +116,8 @@ const AuthScreen = () => {
       pass: '',
     },
   });
+
+  //Hook Form Register
 
   const {
     control: registerControl,
@@ -137,9 +138,6 @@ const AuthScreen = () => {
       passConfirmRegister: '',
     },
   });
-
-  console.log(loginErrors);
-  console.log(registerErrors);
 
   //Login State for Register Modal
   const [loginState, setLoginState] = useState(true);

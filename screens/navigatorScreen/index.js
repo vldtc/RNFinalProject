@@ -18,7 +18,7 @@ const NavigatorScreen = () => {
     new Animated.Value(drawerState ? 150 : 0),
   ).current;
 
-  const scale = useRef(new Animated.Value(drawerState ? 0.8 : 1)).current;
+  const scale = useRef(new Animated.Value(0)).current;
 
   const rotation = useRef(new Animated.Value(drawerState ? 15 : 0)).current;
 
@@ -39,7 +39,7 @@ const NavigatorScreen = () => {
       useNativeDriver: false,
     }).start();
     Animated.timing(scale, {
-      toValue: drawerState ? 0.8 : 1,
+      toValue: drawerState ? 1 : 1,
       duration: 500,
       easing: easing,
       useNativeDriver: false,

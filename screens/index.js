@@ -6,6 +6,7 @@ import DashScreen from './dashScreen';
 import AboutMeScreen from './aboutMeScreen';
 import PeopleScreen from './peopleScreen';
 import ProfileScreen from './profileScreen';
+import AddMarkerScreen from './addMarkerScreen';
 
 export {
   HomeScreen,
@@ -16,4 +17,5 @@ export {
   AboutMeScreen,
   PeopleScreen,
   ProfileScreen,
+  AddMarkerScreen,
 };

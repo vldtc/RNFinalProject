@@ -9,7 +9,7 @@ import {
   Easing,
   Alert,
 } from 'react-native';
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {
   updateDrawerState,
@@ -23,11 +23,13 @@ import {useNavigation} from '@react-navigation/native';
 
 const STATUSBAR_HEIGHT = StatusBarManager.HEIGHT;
 
-const TopBarItem = () => {
+const TopBarItem = props => {
   const dispatch = useDispatch();
   const drawerState = useSelector(state => state.drawer.drawerState);
   const currentScreen = useSelector(state => state.drawer.currentScreen);
   const isOutsideDrawer = useSelector(state => state.drawer.isOutsideDrawer);
+
+  const outsideDrawerTitle = useState(props.title);
 
   const animatedRotation = useRef(new Animated.Value(0)).current;
   const animatedTranslation = useRef(new Animated.Value(0)).current;
@@ -95,7 +97,7 @@ const TopBarItem = () => {
           </AnimatedTouchableOpacity>
         )}
         <Text style={styles.titleText}>
-          {!isOutsideDrawer ? t(currentScreen) : t('profile')}
+          {!isOutsideDrawer ? t(currentScreen) : outsideDrawerTitle}
         </Text>
         {!isOutsideDrawer ? (
           <TouchableOpacity

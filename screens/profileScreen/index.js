@@ -2,12 +2,14 @@ import {View, Text, StyleSheet} from 'react-native';
 import React from 'react';
 import {TopBarItem} from '../../components';
 import {useSelector} from 'react-redux';
+import {useTranslation} from 'react-i18next';
 
 const ProfileScreen = () => {
   const userProfile = useSelector(state => state.login.userDetails);
+  const {t} = useTranslation();
   return (
     <View style={styles.container}>
-      <TopBarItem />
+      <TopBarItem title={t('profile')} />
       <View style={styles.profileContainer}>
         <Text>
           {userProfile.firstName} {userProfile.lastName}
